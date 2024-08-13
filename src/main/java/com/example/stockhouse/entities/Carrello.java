@@ -26,7 +26,7 @@ public class Carrello {
     private Date dataCreazione;
 
     @OneToOne(mappedBy = "idCarrello")
-    private Utente id_utente;
+    private Utente id_utente;//da vedere
 
     @OneToMany(targetEntity = DettaglioCarrello.class, mappedBy = "idCarrello", cascade = CascadeType.ALL)
     @JsonIgnore

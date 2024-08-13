@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Recensione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id ", nullable = false)
+    @Column(name = "id", nullable = false)
     private int id;
 
 

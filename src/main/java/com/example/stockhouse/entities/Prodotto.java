@@ -35,12 +35,12 @@ public class Prodotto {
 
     @Version
     @Basic
-    @Column(name = "version", nullable = true)
+    @Column(name = "version", nullable = true)//TODO
     @JsonIgnore
     private Integer version;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "marca")
+    @JoinColumn(name = "id marca")//non so se devo metterlo nel db
     private Marca marca;
 
     @Basic

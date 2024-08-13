@@ -18,7 +18,6 @@ public class Ordine {
     @Column(name = "id ordine", nullable = false)
     private int idOrdine;
 
-
     @OneToOne
     @JoinColumn(name = "id carrello", nullable = true)
     private Carrello idCarrello;
@@ -35,5 +34,5 @@ public class Ordine {
     @JoinColumn(name = "id pagamento", nullable = true)
     private DatiDiPagamento idPagamento;
 
-
+//potresti aggiungere la data e il totale
 }

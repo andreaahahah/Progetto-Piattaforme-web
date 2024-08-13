@@ -21,7 +21,7 @@ public class Utente {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "id carrello", nullable = true)
+    @JoinColumn(name = "id carrello", nullable = true)//da vedere
     private Carrello idCarrello;
 
     @Basic
@@ -33,7 +33,7 @@ public class Utente {
     private String cognome;
 
     @Basic
-    @Column(name = "email", nullable = true, length = -1)
+    @Column(name = "email", nullable = true, length = -1, unique = true)
     private String email;
 
     @Basic
