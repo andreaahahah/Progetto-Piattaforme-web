@@ -15,6 +15,7 @@ import java.util.List;
 @ToString
 @Entity
 public class Utente {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
@@ -31,6 +32,10 @@ public class Utente {
     @Basic
     @Column(name = "cognome", nullable = true, length = -1)
     private String cognome;
+
+    @Basic
+    @Column(name = "dipendente", nullable = true, length = -1)
+    private Boolean dipendente;
 
     @Basic
     @Column(name = "email", nullable = true, length = -1, unique = true)

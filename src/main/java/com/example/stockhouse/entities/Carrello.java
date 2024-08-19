@@ -25,6 +25,10 @@ public class Carrello {
     @Column(name = "data creazione", nullable = true)
     private Date dataCreazione;
 
+    @Basic
+    @Column(name = "totale carrello", nullable = true, length = -1)
+    private int totale_carrello;
+
     @OneToOne(mappedBy = "idCarrello")
     private Utente id_utente;//da vedere
 

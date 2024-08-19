@@ -17,4 +17,6 @@ public interface CarrelloRepository extends JpaRepository<Carrello, Integer> {
             "WHERE c.idCarrello = ?1 "
     )
     List<DettaglioCarrello>findDettagli(Carrello c);
+
+
 }

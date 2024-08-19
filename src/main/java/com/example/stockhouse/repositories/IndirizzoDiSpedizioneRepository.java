@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface IndirizzoDiSpedizioneRepository extends JpaRepository<IndirizzoDiSpedizione, Integer> {
-    List<IndirizzoDiSpedizione> findByIdUtente(Utente idUtente);
+    List<IndirizzoDiSpedizione> findByIdUtente(Utente utente);
 
 
 }

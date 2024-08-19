@@ -24,5 +24,4 @@ public interface DettaglioCarrelloRepository extends JpaRepository<DettaglioCarr
 
 
 
-
 }

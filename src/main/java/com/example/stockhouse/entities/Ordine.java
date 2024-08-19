@@ -1,10 +1,10 @@
 package com.example.stockhouse.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import javax.xml.crypto.Data;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,6 +17,14 @@ public class Ordine {
     @Id
     @Column(name = "id ordine", nullable = false)
     private int idOrdine;
+
+    @Basic
+    @Column(name = "data", nullable = true, length = -1)
+    private Date data;
+
+    @Basic
+    @Column(name = "totale", nullable = true, length = -1)
+    private int totale;
 
     @OneToOne
     @JoinColumn(name = "id carrello", nullable = true)
@@ -34,5 +42,5 @@ public class Ordine {
     @JoinColumn(name = "id pagamento", nullable = true)
     private DatiDiPagamento idPagamento;
 
-//potresti aggiungere la data e il totale
+
 }
