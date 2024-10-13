@@ -10,13 +10,14 @@ import java.util.List;
 
 public interface CarrelloRepository extends JpaRepository<Carrello, Integer> {
 
-    List<Carrello>findCarrelloById_utente(Utente u);
+    Carrello findCarrelloById_utente(Utente u);
 
     @Query("SELECT c.dettaglioCarrelloList " +
             "FROM Carrello c "+
             "WHERE c.idCarrello = ?1 "
     )
     List<DettaglioCarrello>findDettagli(Carrello c);
+
 
 
 }

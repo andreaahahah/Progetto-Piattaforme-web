@@ -23,5 +23,4 @@ public interface DettaglioCarrelloRepository extends JpaRepository<DettaglioCarr
     Prodotto findProdottoByIdDettaglio(int id);
 
 
-
 }

@@ -17,7 +17,7 @@ public class CarrelloService {
     private CarrelloRepository carrelloRepository;
 
     @Transactional(readOnly = true)
-    public List<Carrello> getCarrelliByUtente(Utente utente) {
+    public Carrello getCarrelliByUtente(Utente utente) {
         return carrelloRepository.findCarrelloById_utente(utente);
     }
 

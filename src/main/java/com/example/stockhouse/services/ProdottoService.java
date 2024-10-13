@@ -1,5 +1,6 @@
 package com.example.stockhouse.services;
 
+import com.example.stockhouse.entities.Marca;
 import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.repositories.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ProdottoService {
         return prodottoRepository.findProdottosByNome(name);
     }
     @Transactional(readOnly = true)
-    public List<Prodotto> showProductsByMarca(String marca){
+    public List<Prodotto> showProductsByMarca(Marca marca){
         return prodottoRepository.findProdottosByMarca(marca);
     }
 

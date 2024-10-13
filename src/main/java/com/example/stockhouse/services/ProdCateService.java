@@ -12,6 +12,6 @@ public class ProdCateService {
     private ProdCateRepository prodCateRepository;
 
     public List<Prodotto> findProdotti(CategoriaProdotto categoria){
-        return prodCateRepository.findProdCatesByIdCategoria(categoria);
+        return prodCateRepository.findProdottosByIdCategoria(categoria);
     }
 }
