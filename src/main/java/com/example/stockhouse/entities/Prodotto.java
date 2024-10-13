@@ -27,11 +27,11 @@ public class Prodotto {
 
 
     @Column(name = "immagini", nullable = true, length = -1)
-    private Object immagini;
+    private String immagini;
 
     @Basic
     @Column(name = "quantità", nullable = true)
-    private Integer quantità;
+    private Integer quantita;
 
     @Version
     @Basic

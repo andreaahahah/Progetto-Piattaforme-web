@@ -15,10 +15,10 @@ public class DettaglioCarrelloService {
     private DettaglioCarrelloRepository dettaglioCarrelloRepository;
 
     public List<DettaglioCarrello> findDettagli(Carrello carrello){
-        return dettaglioCarrelloRepository.findByCarrello(carrello);
+        return dettaglioCarrelloRepository.findByIdCarrello(carrello);
     }
     public DettaglioCarrello findDettaglio(Carrello carrello, Prodotto prodotto){
-        return dettaglioCarrelloRepository.findByCarrelloAndProdotto(carrello, prodotto);
+        return dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
     }
     public Prodotto findProdotto(int id_dettaglio){
         return dettaglioCarrelloRepository.findProdottoByIdDettaglio(id_dettaglio);

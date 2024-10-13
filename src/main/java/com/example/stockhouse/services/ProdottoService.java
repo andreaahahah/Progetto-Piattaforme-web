@@ -47,11 +47,11 @@ public class ProdottoService {
     }
     @Transactional(readOnly = true)
     public boolean isProductAvailable(Long productId) {
-        return prodottoRepository.existsByIdAndQuantityGreaterThan(productId, 0);
+        return prodottoRepository.existsByIdAndQuantitaGreaterThan(productId, 0);
     }
 
     @Transactional(readOnly = true)
     public List<Prodotto> showProductsAvailable() {
-        return prodottoRepository.findProdottosWithPositiveQuantity();
+        return prodottoRepository.findProdottosWithPositiveQuantita();
     }
     }

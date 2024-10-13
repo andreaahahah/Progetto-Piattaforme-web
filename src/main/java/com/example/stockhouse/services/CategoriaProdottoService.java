@@ -1,6 +1,7 @@
 package com.example.stockhouse.services;
 
 import com.example.stockhouse.entities.CategoriaProdotto;
+import com.example.stockhouse.exceptions.CategoriaProdottoAlreadyExist;
 import com.example.stockhouse.repositories.CategoriaProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,16 @@ public class CategoriaProdottoService {
     @Autowired
     private CategoriaProdottoRepository categoriaProdottoRepository;
 
+    public void createCategoriaProdotto(String nome) throws CategoriaProdottoAlreadyExist {
+        if(categoriaProdottoRepository.findCategoriaProdottoByNome(nome) == null){
+            CategoriaProdotto cp = new CategoriaProdotto();
+            cp.setNome(nome);
+            categoriaProdottoRepository.save(cp);
+        }
+        else{
+            throw new CategoriaProdottoAlreadyExist();
+        }
+    }
     @Transactional(readOnly = true)
     public List<CategoriaProdotto> findCategoria(String nome){
         return categoriaProdottoRepository.findByNomeContaining(nome);

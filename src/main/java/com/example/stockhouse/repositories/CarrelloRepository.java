@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CarrelloRepository extends JpaRepository<Carrello, Integer> {
 
-    Carrello findCarrelloById_utente(Utente u);
+    Carrello findCarrelloByUtente(Utente u);
 
     @Query("SELECT c.dettaglioCarrelloList " +
             "FROM Carrello c "+

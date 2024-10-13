@@ -11,6 +11,8 @@ public interface CategoriaProdottoRepository extends JpaRepository<CategoriaProd
 
     List<CategoriaProdotto> findByNomeContaining(String nome);
 
+    CategoriaProdottoRepository findCategoriaProdottoByNome(String nome);
+
     //metto in ordine le categorie in base al nome
     List<CategoriaProdotto> findAllByOrderByNomeAsc();
 

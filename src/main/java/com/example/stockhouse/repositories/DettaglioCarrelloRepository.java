@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface DettaglioCarrelloRepository extends JpaRepository<DettaglioCarrello, Integer> {
 
-    List<DettaglioCarrello> findByCarrello(Carrello carrello);
+    List<DettaglioCarrello> findByIdCarrello(Carrello carrello);
 
-    DettaglioCarrello findByCarrelloAndProdotto(Carrello carrello, Prodotto prodotto);
+    DettaglioCarrello findByIdCarrelloAndIdProdotto(Carrello carrello, Prodotto prodotto);
 
     @Query("SELECT dc.idProdotto " +
             "FROM DettaglioCarrello dc "+

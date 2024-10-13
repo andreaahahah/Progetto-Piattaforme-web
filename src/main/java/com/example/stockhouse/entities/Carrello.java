@@ -21,6 +21,7 @@ public class Carrello {
     @Id
     @Column(name = "id carrello", nullable = false)
     private int idCarrello;
+
     @Basic
     @Column(name = "data creazione", nullable = true)
     private Date dataCreazione;
@@ -29,7 +30,7 @@ public class Carrello {
     @Column(name = "totale carrello", nullable = true, length = -1)
     private int totale_carrello;
 
-    @OneToOne(mappedBy = "idCarrello")
+    @OneToOne(mappedBy = "carrello")
     private Utente utente;//da vedere
 
     @OneToMany(targetEntity = DettaglioCarrello.class, mappedBy = "idCarrello", cascade = CascadeType.ALL)

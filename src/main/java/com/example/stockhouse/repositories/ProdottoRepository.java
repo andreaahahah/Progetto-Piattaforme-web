@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
 
     List<Prodotto> findProdottosByPrezzoBetween(int prezzoMin, int prezzoMax);
-    boolean existsByIdAndQuantityGreaterThan(Long id, int quantity);
+    boolean existsByIdAndQuantitaGreaterThan(Long id, int quantita);
 
     List<Prodotto> findProdottosByMarca(Marca marca);
 
@@ -22,8 +22,8 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
 
     @Query("SELECT p " +
             "FROM Prodotto p" +
-            " WHERE p.quantità > 0")
-    List<Prodotto> findProdottosWithPositiveQuantity();
+            " WHERE p.quantita > 0")
+    List<Prodotto> findProdottosWithPositiveQuantita();
 
 
 

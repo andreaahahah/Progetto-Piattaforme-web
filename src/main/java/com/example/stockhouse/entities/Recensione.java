@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -28,7 +30,7 @@ public class Recensione {
 
     @Basic
     @Column(name = "data", nullable = true)
-    private Object data;
+    private Date data;
 
     @Basic
     @Column(name = "commento", nullable = true, length = -1)

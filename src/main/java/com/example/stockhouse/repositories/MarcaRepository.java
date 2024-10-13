@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca, Integer> {
 
-    List<Marca> findByNomeContaining(String nome);
+    List<Marca> findMarcaByNomeContaining(String nome);
+
+    Marca findMarcaByNome(String nome);
     List<Marca> findAllByOrderByNomeAsc();
 }
