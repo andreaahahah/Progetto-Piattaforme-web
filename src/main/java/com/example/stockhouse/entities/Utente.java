@@ -26,15 +26,15 @@ public class Utente {
     private Carrello carrello;
 
     @Basic
-    @Column(name = "nome", nullable = true, length = -1)
+    @Column(name = "nome", nullable = false, length = -1)
     private String nome;
 
     @Basic
-    @Column(name = "cognome", nullable = true, length = -1)
+    @Column(name = "cognome", nullable = false, length = -1)
     private String cognome;
 
     @Basic
-    @Column(name = "email", nullable = true, length = -1, unique = true)
+    @Column(name = "email", nullable = false, length = -1, unique = true)
     private String email;
 
     @Basic

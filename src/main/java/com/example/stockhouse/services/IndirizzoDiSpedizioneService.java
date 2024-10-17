@@ -18,12 +18,12 @@ public class IndirizzoDiSpedizioneService {
     }
     public void createIndirizzoDiSpedizione(Utente utente, String via,String città,String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
-            IndirizzoDiSpedizione IndirizzoDiSpedizione = new IndirizzoDiSpedizione();
-            IndirizzoDiSpedizione.setIdUtente(utente);
-            IndirizzoDiSpedizione.setVia(via);
-            IndirizzoDiSpedizione.setCittà(città);
-            IndirizzoDiSpedizione.setCap(cap);
-            IndirizzoDiSpedizione.setNazione(nazione);
+            IndirizzoDiSpedizione indirizzoDiSpedizione = new IndirizzoDiSpedizione();
+            indirizzoDiSpedizione.setIdUtente(utente);
+            indirizzoDiSpedizione.setVia(via);
+            indirizzoDiSpedizione.setCittà(città);
+            indirizzoDiSpedizione.setCap(cap);
+            indirizzoDiSpedizione.setNazione(nazione);
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();

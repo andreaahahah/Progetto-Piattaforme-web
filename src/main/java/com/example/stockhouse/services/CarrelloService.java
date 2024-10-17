@@ -17,7 +17,7 @@ public class CarrelloService {
     private CarrelloRepository carrelloRepository;
 
     @Transactional(readOnly = true)
-    public Carrello getCarrelliByUtente(Utente utente) {
+    public Carrello getCarrelloByUtente(Utente utente) {
         return carrelloRepository.findCarrelloByUtente(utente);
     }
 
@@ -26,6 +26,11 @@ public class CarrelloService {
         Carrello carrello = carrelloRepository.findById(idCarrello)
                 .orElseThrow(() -> new IllegalArgumentException("Carrello not found with ID: " + idCarrello));
         return carrelloRepository.findDettagli(carrello);
+    }
+
+    //TODO  come devo crearlo? lo screo e faccio il setIdUtente oppure si collega in automatico? mhhh
+    public void createCarrello(){
+
     }
 
 }
