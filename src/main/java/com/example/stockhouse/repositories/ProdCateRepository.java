@@ -17,4 +17,9 @@ public interface ProdCateRepository extends JpaRepository<ProdCate, Integer> {
             "FROM ProdCate as pc" +
             " WHERE pc.idCategoria = ?1")
     List<Prodotto> findProdottosByIdCategoria(CategoriaProdotto c); //forse è meglio farsi passare direttamente l'id della categoria
+
+    @Query("SELECT pc.idCategoria " +
+            "FROM ProdCate as pc" +
+            " WHERE pc.idProdotto = ?1")
+    List<CategoriaProdotto> findCategoriaByIdProdotto(Prodotto p);
 }

@@ -12,4 +12,6 @@ public interface DatiDiPagamentoRepository extends JpaRepository<DatiDiPagamento
 
     List<DatiDiPagamento> findByIdUtente(Utente idUtente);
 
+    DatiDiPagamento findByIdUtenteAndnAndNumeroCarta(Utente idUtente, String numeroCarta);
+
 }

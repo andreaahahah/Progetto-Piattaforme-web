@@ -21,11 +21,11 @@ public class DatiDiPagamento {
     private int idPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "id utente", nullable = true)
+    @JoinColumn(name = "id utente", nullable = false)
     private Utente idUtente;
     
     @Basic
-    @Column(name = "data scadenza", nullable = true)
+    @Column(name = "data scadenza", nullable = false)
     private Date dataScadenza;
 
     @Basic
@@ -33,15 +33,15 @@ public class DatiDiPagamento {
     private String codiceSicurezza;
 
     @Basic
-    @Column(name = "tipo carta", nullable = true, length = -1)
+    @Column(name = "tipo carta", nullable = false, length = -1)
     private String tipoCarta;
 
     @Basic
-    @Column(name = "numero carta", nullable = true, length = -1)
+    @Column(name = "numero carta", nullable = false, length = -1)
     private String numeroCarta;
 
     @Basic
-    @Column(name = "nome carta", nullable = true, length = -1)
+    @Column(name = "nome carta", nullable = false, length = -1)
     private String nomeCarta;
 
 

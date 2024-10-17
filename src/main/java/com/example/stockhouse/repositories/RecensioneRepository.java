@@ -13,4 +13,6 @@ public interface RecensioneRepository extends JpaRepository<Recensione, Integer>
     List<Recensione> findRecensioneByIdUtente(Utente idUtente);
 
     List<Recensione> findRecensioneByIdProdotto(Prodotto idProdotto);
+
+    Recensione findRecensioneByIdUtenteAndAndIdProdotto(Utente idUtente, Prodotto idProdotto);
 }

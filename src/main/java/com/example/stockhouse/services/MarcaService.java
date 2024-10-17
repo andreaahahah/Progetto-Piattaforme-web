@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class MarcaService {
     private MarcaRepository marcaRepository;
-    @Transactional(readOnly = true)
+    @Transactional
     public void createMarca(String nome) throws MarcaAlreadyExist {
         if(marcaRepository.findMarcaByNome(nome) == null){
             Marca m = new Marca();

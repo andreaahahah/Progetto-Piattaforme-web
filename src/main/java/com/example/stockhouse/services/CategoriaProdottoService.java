@@ -25,6 +25,17 @@ public class CategoriaProdottoService {
             throw new CategoriaProdottoAlreadyExist();
         }
     }
+    public void createCategoriaProdotto(String nome, String descrizione) throws CategoriaProdottoAlreadyExist {
+        if(categoriaProdottoRepository.findCategoriaProdottoByNome(nome) == null){
+            CategoriaProdotto cp = new CategoriaProdotto();
+            cp.setNome(nome);
+            cp.setDescrizione(descrizione);
+            categoriaProdottoRepository.save(cp);
+        }
+        else{
+            throw new CategoriaProdottoAlreadyExist();
+        }
+    }
     @Transactional(readOnly = true)
     public List<CategoriaProdotto> findCategoria(String nome){
         return categoriaProdottoRepository.findByNomeContaining(nome);

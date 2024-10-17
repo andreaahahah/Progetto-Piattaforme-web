@@ -21,11 +21,11 @@ public class Recensione {
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id prodotto", nullable = true)
+    @JoinColumn(name = "id prodotto", nullable = false)
     private Prodotto idProdotto;
 
     @Basic
-    @Column(name = "valutazione", nullable = true)
+    @Column(name = "valutazione", nullable = false)
     private Integer valutazione;
 
     @Basic

@@ -19,23 +19,23 @@ public class IndirizzoDiSpedizione {
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id utente", nullable = true)
+    @JoinColumn(name = "id utente", nullable = false)
     private Utente idUtente;
 
     @Basic
-    @Column(name = "via", nullable = true, length = -1)
+    @Column(name = "via", nullable = false, length = -1)
     private String via;
 
     @Basic
-    @Column(name = "città", nullable = true, length = -1)
+    @Column(name = "città", nullable = false, length = -1)
     private String città;
 
     @Basic
-    @Column(name = "cap", nullable = true, length = -1)
+    @Column(name = "cap", nullable = false, length = -1)
     private String cap;
 
     @Basic
-    @Column(name = "nazione", nullable = true, length = -1)
+    @Column(name = "nazione", nullable = false, length = -1)
     private String nazione;
 
     @Basic
