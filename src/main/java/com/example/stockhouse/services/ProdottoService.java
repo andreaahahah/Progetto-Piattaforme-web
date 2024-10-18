@@ -54,4 +54,24 @@ public class ProdottoService {
     public List<Prodotto> showProductsAvailable() {
         return prodottoRepository.findProdottosWithPositiveQuantita();
     }
+
+    public void createProdotto(String nome, Integer prezzo,String descrizione, String immagini,Integer quantita, Marca marca){
+        if(prodottoRepository.findByNomeAndDescrizioneAndMarca( nome, descrizione, marca ) == null){
+            Prodotto prodotto = new Prodotto();
+            prodotto.setNome(nome);
+            prodotto.setPrezzo(prezzo);
+            prodotto.setDescrizione(descrizione);
+            prodotto.setImmagini(immagini);
+            prodotto.setQuantita(quantita);
+            prodotto.setMarca(marca);
+        }
+        else{
+            Prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca( nome, descrizione, marca );
+            p.setQuantita(p.getQuantita()+1);
+        }
+    }
+
+    public void addQuantita(Prodotto prodotto, int quantita){
+        prodotto.setQuantita(prodotto.getQuantita()+quantita);
+    }
     }

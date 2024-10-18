@@ -19,15 +19,15 @@ public class DettaglioCarrello {
     private int idDettaglio;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id carrello", nullable = true)
+    @JoinColumn(name = "id carrello", nullable = false)
     private Carrello idCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id prodotto", nullable = true)
+    @JoinColumn(name = "id prodotto", nullable = false)
     private Prodotto idProdotto;
 
     @Basic
-    @Column(name = "qunatità", nullable = true)
+    @Column(name = "qunatità", nullable = false)
     private Integer qunatità;
 
 

@@ -23,4 +23,18 @@ public class DettaglioCarrelloService {
     public Prodotto findProdotto(int id_dettaglio){
         return dettaglioCarrelloRepository.findProdottoByIdDettaglio(id_dettaglio);
     }
+
+    public void createDettaglioCarrello(Carrello carrello, Prodotto prodotto, int quantita){
+        if(dettaglioCarrelloRepository.existByIdCarrelloAndIdProdotto( carrello, prodotto)){
+            DettaglioCarrello dt = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
+            dt.setQunatità(dt.getQunatità()+quantita);
+
+        }
+        else{
+            DettaglioCarrello dettaglioCarrello = new DettaglioCarrello();
+            dettaglioCarrello.setIdCarrello(carrello);
+            dettaglioCarrello.setIdProdotto(prodotto);
+            dettaglioCarrello.setQunatità(quantita);
+        }
+    }
 }

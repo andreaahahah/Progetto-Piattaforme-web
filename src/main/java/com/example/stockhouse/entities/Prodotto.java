@@ -22,15 +22,15 @@ public class Prodotto {
     private int id;
 
     @Basic
-    @Column(name = "prezzo", nullable = true)
+    @Column(name = "prezzo", nullable = false)
     private Integer prezzo;
 
 
-    @Column(name = "immagini", nullable = true, length = -1)
+    @Column(name = "immagini", nullable = false, length = -1)
     private String immagini;
 
     @Basic
-    @Column(name = "quantità", nullable = true)
+    @Column(name = "quantità", nullable = false)
     private Integer quantita;
 
     @Version
@@ -44,11 +44,11 @@ public class Prodotto {
     private Marca marca;
 
     @Basic
-    @Column(name = "nome", nullable = true, length = -1)
+    @Column(name = "nome", nullable = false, length = -1)
     private String nome;
 
     @Basic
-    @Column(name = "descrizione", nullable = true, length = -1)
+    @Column(name = "descrizione", nullable = false, length = -1)
     private String descrizione;
 
     @OneToMany(targetEntity = Recensione.class, mappedBy = "idProdotto", cascade = CascadeType.ALL)

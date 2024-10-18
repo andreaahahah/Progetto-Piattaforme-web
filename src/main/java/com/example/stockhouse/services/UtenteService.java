@@ -19,6 +19,8 @@ public class UtenteService {
             utente.setNome(nome);
             utente.setCognome(cognome);
             utente.setEmail(email);
+            CarrelloService carrello = new CarrelloService();
+            utente.setCarrello(carrello.createCarrello(utente));
         }else{
             throw new UtenteAlreadyExist();
         }

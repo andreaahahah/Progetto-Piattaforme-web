@@ -14,6 +14,7 @@ public interface DettaglioCarrelloRepository extends JpaRepository<DettaglioCarr
 
     List<DettaglioCarrello> findByIdCarrello(Carrello carrello);
 
+    Boolean existByIdCarrelloAndIdProdotto(Carrello carrello, Prodotto prodotto);
     DettaglioCarrello findByIdCarrelloAndIdProdotto(Carrello carrello, Prodotto prodotto);
 
     @Query("SELECT dc.idProdotto " +

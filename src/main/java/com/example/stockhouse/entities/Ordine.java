@@ -23,23 +23,23 @@ public class Ordine {
     private Date data;
 
     @Basic
-    @Column(name = "totale", nullable = true, length = -1)
+    @Column(name = "totale", nullable = false, length = -1)
     private int totale;
 
     @OneToOne
-    @JoinColumn(name = "id carrello", nullable = true)
+    @JoinColumn(name = "id carrello", nullable = false)
     private Carrello idCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id indirizzo", nullable = true)
+    @JoinColumn(name = "id indirizzo", nullable = false)
     private IndirizzoDiSpedizione idIndirizzo;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id utente", nullable = true)
+    @JoinColumn(name = "id utente", nullable = false)
     private Utente idUtente;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id pagamento", nullable = true)
+    @JoinColumn(name = "id pagamento", nullable = false)
     private DatiDiPagamento idPagamento;
 
 

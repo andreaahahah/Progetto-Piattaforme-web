@@ -29,8 +29,10 @@ public class CarrelloService {
     }
 
     //TODO  come devo crearlo? lo screo e faccio il setIdUtente oppure si collega in automatico? mhhh
-    public void createCarrello(){
-
+    public Carrello createCarrello( Utente utente){
+        Carrello carrello = new Carrello();
+        carrello.setUtente(utente);
+       return carrello;
     }
 
 }
