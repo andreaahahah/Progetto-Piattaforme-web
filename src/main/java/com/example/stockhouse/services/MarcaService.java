@@ -10,7 +10,12 @@ import java.util.List;
 
 @Service
 public class MarcaService {
-    private MarcaRepository marcaRepository;
+    private final MarcaRepository marcaRepository;
+
+    public MarcaService(MarcaRepository marcaRepository) {
+        this.marcaRepository = marcaRepository;
+    }
+
     @Transactional
     public void createMarca(String nome) throws MarcaAlreadyExist {
         if(marcaRepository.findMarcaByNome(nome) == null){

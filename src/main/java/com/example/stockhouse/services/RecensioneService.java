@@ -14,7 +14,11 @@ import java.util.List;
 
 @Service
 public class RecensioneService {
-    private RecensioneRepository recensioneRepository;
+    private final RecensioneRepository recensioneRepository;
+
+    public RecensioneService(RecensioneRepository recensioneRepository) {
+        this.recensioneRepository = recensioneRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<Recensione> findRecensioneByUtente(Utente utente){
@@ -31,6 +35,7 @@ public class RecensioneService {
             recensione.setIdUtente(utente);
             recensione.setIdProdotto(prodotto);
             recensione.setValutazione(valutazione);
+            recensioneRepository.save(recensione);
         }
         else{
             throw new RecensioneAlreadyExist();
@@ -44,6 +49,7 @@ public class RecensioneService {
             recensione.setIdProdotto(prodotto);
             recensione.setValutazione(valutazione);
             recensione.setCommento(commento);
+            recensioneRepository.save(recensione);
         }
         else{
             throw new RecensioneAlreadyExist();

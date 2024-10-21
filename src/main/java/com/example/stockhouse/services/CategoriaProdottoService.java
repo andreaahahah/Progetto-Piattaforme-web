@@ -12,8 +12,11 @@ import java.util.List;
 @Service
 public class CategoriaProdottoService {
 
-    @Autowired
-    private CategoriaProdottoRepository categoriaProdottoRepository;
+    private final CategoriaProdottoRepository categoriaProdottoRepository;
+
+    public CategoriaProdottoService(CategoriaProdottoRepository categoriaProdottoRepository) {
+        this.categoriaProdottoRepository = categoriaProdottoRepository;
+    }
 
     public void createCategoriaProdotto(String nome) throws CategoriaProdottoAlreadyExist {
         if(categoriaProdottoRepository.findCategoriaProdottoByNome(nome) == null){

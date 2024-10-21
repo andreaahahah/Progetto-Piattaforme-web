@@ -29,6 +29,7 @@ public class Ordine {
     @OneToOne
     @JoinColumn(name = "id carrello", nullable = false)
     private Carrello idCarrello;
+    //TODO metti una lista di dettagli carrello al suo posto
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id indirizzo", nullable = false)

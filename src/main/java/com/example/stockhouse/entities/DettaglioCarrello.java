@@ -28,7 +28,8 @@ public class DettaglioCarrello {
 
     @Basic
     @Column(name = "qunatità", nullable = false)
-    private Integer qunatità;
+    private Integer quantità;
+    // TODO aggiungi il prezzo
 
 
 }

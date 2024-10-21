@@ -11,7 +11,11 @@ import java.util.List;
 @Service
 public class IndirizzoDiSpedizioneService {
 
-    private IndirizzoDiSpedizioneRepository indirizzoDiSpedizioneRepository;
+    private final IndirizzoDiSpedizioneRepository indirizzoDiSpedizioneRepository;
+
+    public IndirizzoDiSpedizioneService(IndirizzoDiSpedizioneRepository indirizzoDiSpedizioneRepository) {
+        this.indirizzoDiSpedizioneRepository = indirizzoDiSpedizioneRepository;
+    }
 
     public List<IndirizzoDiSpedizione> findIndirizzi(Utente utente){
         return indirizzoDiSpedizioneRepository.findByIdUtente(utente);
@@ -24,6 +28,7 @@ public class IndirizzoDiSpedizioneService {
             indirizzoDiSpedizione.setCittà(città);
             indirizzoDiSpedizione.setCap(cap);
             indirizzoDiSpedizione.setNazione(nazione);
+            indirizzoDiSpedizioneRepository.save(indirizzoDiSpedizione);
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();
@@ -39,6 +44,7 @@ public class IndirizzoDiSpedizioneService {
             IndirizzoDiSpedizione.setCap(cap);
             IndirizzoDiSpedizione.setNazione(nazione);
             IndirizzoDiSpedizione.setNote(note);
+            indirizzoDiSpedizioneRepository.save(IndirizzoDiSpedizione);
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();

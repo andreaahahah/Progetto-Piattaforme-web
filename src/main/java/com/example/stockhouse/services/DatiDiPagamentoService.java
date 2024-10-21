@@ -12,7 +12,11 @@ import java.util.List;
 @Service
 public class DatiDiPagamentoService {
 
-    private DatiDiPagamentoRepository datiDiPagamentoRepository;
+    private final DatiDiPagamentoRepository datiDiPagamentoRepository;
+
+    public DatiDiPagamentoService(DatiDiPagamentoRepository datiDiPagamentoRepository) {
+        this.datiDiPagamentoRepository = datiDiPagamentoRepository;
+    }
 
     public List<DatiDiPagamento> findDatiDiPagamento(Utente idUtente){
         return datiDiPagamentoRepository.findByIdUtente(idUtente);
@@ -26,6 +30,7 @@ public class DatiDiPagamentoService {
             datiDiPagamento.setDataScadenza((java.sql.Date) dataScadenza);
             datiDiPagamento.setTipoCarta(tipoCarta);
             datiDiPagamento.setNomeCarta(nomeCarta);
+            datiDiPagamentoRepository.save(datiDiPagamento);
         }
         else{
             throw new DatoDiPagamentoAlreadyExist();

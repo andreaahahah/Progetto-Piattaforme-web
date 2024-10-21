@@ -7,7 +7,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UtenteService {
-    private UtenteRepository utenteRepository;
+    private final UtenteRepository utenteRepository;
+    private final CarrelloService carrelloService;
+    public UtenteService(UtenteRepository utenteRepository,CarrelloService carrelloService) {
+        this.utenteRepository = utenteRepository;
+        this.carrelloService = carrelloService;
+    }
+
 
     public Utente findUtente(String email){
         return utenteRepository.findByEmail(email);
@@ -19,8 +25,8 @@ public class UtenteService {
             utente.setNome(nome);
             utente.setCognome(cognome);
             utente.setEmail(email);
-            CarrelloService carrello = new CarrelloService();
-            utente.setCarrello(carrello.createCarrello(utente));
+            utente.setCarrello(carrelloService.createCarrello(utente));//TODO modifica il db
+            utenteRepository.save(utente);
         }else{
             throw new UtenteAlreadyExist();
         }

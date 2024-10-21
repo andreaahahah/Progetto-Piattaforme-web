@@ -2,6 +2,7 @@ package com.example.stockhouse.services;
 
 import com.example.stockhouse.entities.Marca;
 import com.example.stockhouse.entities.Prodotto;
+import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,11 @@ import java.util.List;
 @Service
 public class ProdottoService {
 
-    @Autowired
-    private ProdottoRepository prodottoRepository;
+    private final ProdottoRepository prodottoRepository;
+
+    public ProdottoService(ProdottoRepository prodottoRepository) {
+        this.prodottoRepository = prodottoRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<Prodotto> showAllProducts(int pageNumber, int pageSize, String sortBy) {
@@ -28,7 +32,7 @@ public class ProdottoService {
             return pagedResult.getContent();
         }
         else {
-            return new ArrayList<>(); // non fare mai i return del null, ritorna una lista vuota che è meglio
+            return new ArrayList<>();
         }
     }
 
@@ -46,7 +50,7 @@ public class ProdottoService {
         return prodottoRepository.advancedSearch(name, description);
     }
     @Transactional(readOnly = true)
-    public boolean isProductAvailable(Long productId) {
+    public boolean isProductAvailable(int productId) {
         return prodottoRepository.existsByIdAndQuantitaGreaterThan(productId, 0);
     }
 
@@ -64,14 +68,23 @@ public class ProdottoService {
             prodotto.setImmagini(immagini);
             prodotto.setQuantita(quantita);
             prodotto.setMarca(marca);
+            prodottoRepository.save(prodotto);
         }
         else{
             Prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca( nome, descrizione, marca );
             p.setQuantita(p.getQuantita()+1);
+            prodottoRepository.save(p);
+
         }
     }
 
-    public void addQuantita(Prodotto prodotto, int quantita){
-        prodotto.setQuantita(prodotto.getQuantita()+quantita);
+    public void addQuantita(Prodotto prodotto, int quantita)throws ProdottoNotExist {
+        if (prodottoRepository.findById(prodotto.getId()).isPresent()) {
+            Prodotto p = prodottoRepository.findProdottoById(prodotto.getId());
+            p.setQuantita(prodotto.getQuantita() + quantita);
+        } else {
+            throw new ProdottoNotExist();
+        }
+
     }
     }

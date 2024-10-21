@@ -31,7 +31,7 @@ public class Carrello {
     private int totale_carrello;
 
     @OneToOne(mappedBy = "carrello")
-    private Utente utente;//da vedere
+    private Utente utente;
 
     @OneToMany(targetEntity = DettaglioCarrello.class, mappedBy = "idCarrello", cascade = CascadeType.ALL)
     @JsonIgnore

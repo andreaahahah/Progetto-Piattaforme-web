@@ -4,6 +4,7 @@ import com.example.stockhouse.entities.Carrello;
 import com.example.stockhouse.entities.DettaglioCarrello;
 import com.example.stockhouse.entities.Utente;
 import com.example.stockhouse.repositories.CarrelloRepository;
+import com.example.stockhouse.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +14,22 @@ import java.util.List;
 @Service
 public class CarrelloService {
 
-    @Autowired
-    private CarrelloRepository carrelloRepository;
+    private final CarrelloRepository carrelloRepository;
 
-    @Transactional(readOnly = true)
-    public Carrello getCarrelloByUtente(Utente utente) {
-        return carrelloRepository.findCarrelloByUtente(utente);
+    public CarrelloService(CarrelloRepository carrelloRepository) {
+        this.carrelloRepository = carrelloRepository;
+    }
+
+    public Carrello getCarrelloByUtente(Utente utente)
+    {
+        if(carrelloRepository.findCarrelloByUtente(utente)==null){
+            Carrello carrello = new Carrello();
+            carrello.setUtente(utente);
+            return carrelloRepository.save(carrello);
+        }else {
+            return carrelloRepository.findCarrelloByUtente(utente);
+        }
+
     }
 
     @Transactional(readOnly = true)
@@ -28,11 +39,17 @@ public class CarrelloService {
         return carrelloRepository.findDettagli(carrello);
     }
 
-    //TODO  come devo crearlo? lo screo e faccio il setIdUtente oppure si collega in automatico? mhhh
-    public Carrello createCarrello( Utente utente){
-        Carrello carrello = new Carrello();
-        carrello.setUtente(utente);
-       return carrello;
-    }
 
+    public Carrello createCarrello(Utente utente) {
+        Carrello c = carrelloRepository.findCarrelloByUtente(utente);
+        if(c ==null){
+            Carrello carrello = new Carrello();
+            carrello.setUtente(utente);
+            carrelloRepository.save(carrello);
+            return carrello;
+
+        }else{
+            return c;
+        }
+    }
 }
