@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +31,9 @@ public class Ordine {
     @JoinColumn(name = "id carrello", nullable = false)
     private Carrello idCarrello;
     //TODO metti una lista di dettagli carrello al suo posto
+
+    @OneToMany(mappedBy = "ordine")
+    private List<DettaglioCarrello> dettagliCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id indirizzo", nullable = false)

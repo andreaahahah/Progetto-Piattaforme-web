@@ -23,7 +23,7 @@ public class DatiDiPagamentoService {
     }
 
     public void createDatoDiPagamento(Utente utente, String numeroCarta, Date dataScadenza, String tipoCarta,String nomeCarta) throws DatoDiPagamentoAlreadyExist {
-        if(datiDiPagamentoRepository.findByIdUtenteAndnAndNumeroCarta(utente, numeroCarta) == null){
+        if(datiDiPagamentoRepository.findByIdUtenteAndNumeroCarta(utente, numeroCarta) == null){
             DatiDiPagamento datiDiPagamento = new DatiDiPagamento();
             datiDiPagamento.setIdUtente(utente);
             datiDiPagamento.setNumeroCarta(numeroCarta);

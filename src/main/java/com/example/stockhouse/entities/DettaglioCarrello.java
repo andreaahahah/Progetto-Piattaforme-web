@@ -30,6 +30,13 @@ public class DettaglioCarrello {
     @Column(name = "qunatità", nullable = false)
     private Integer quantità;
     // TODO aggiungi il prezzo
+    @Basic
+    @Column(name= "prezzo",nullable = false)
+    private Integer prezzo;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="id ordine")
+    private Ordine ordine;
 
 
 }

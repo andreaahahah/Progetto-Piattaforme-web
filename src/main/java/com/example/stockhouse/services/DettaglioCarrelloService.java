@@ -34,7 +34,7 @@ public class DettaglioCarrelloService {
 
     public void createDettaglioCarrello(Carrello carrello, Prodotto prodotto, int quantita) throws ProdottoNotExist {
         DettaglioCarrello dettaglioCarrello = null;
-        if(dettaglioCarrelloRepository.existByIdCarrelloAndIdProdotto( carrello, prodotto)){
+        if(dettaglioCarrelloRepository.existsByIdCarrelloAndAndIdProdotto( carrello, prodotto)){
             dettaglioCarrello = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
             dettaglioCarrello.setQuantità(dettaglioCarrello.getQuantità()+quantita);
         }

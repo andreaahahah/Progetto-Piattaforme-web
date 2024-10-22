@@ -41,6 +41,7 @@ public class OrdineService {
         //ordine.setIdCarrello(carrello);
         ordine.setIdIndirizzo(indirizzoDiSpedizione);
         ordine.setIdPagamento(datiDiPagamento);
+
         HashMap<Integer,Integer> prodotti = new HashMap<>();
         for(DettaglioCarrello dc: carrello.getDettaglioCarrelloList()){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
@@ -54,7 +55,7 @@ public class OrdineService {
             }
         }
         prodottoRepository.saveAll(prodLock);
-        ordine.setListaProdotti(prodLock);
+        ordine.setDettagliCarrello(carrello.getDettaglioCarrelloList());// TODO è giusto?
         ordineRepository.save(ordine);
 
     }
