@@ -26,18 +26,17 @@ public class Prodotto {
     private Integer prezzo;
 
 
-    @Column(name = "immagini", nullable = false, length = -1)
+    @Column(name = "immagini", nullable = true, length = -1)
     private String immagini;
 
     @Basic
     @Column(name = "quantità", nullable = false)
     private Integer quantita;
 
-    @Version
     @Basic
-    @Column(name = "version", nullable = true)//TODO
+    @Column(name = "vetrina", nullable = true)
     @JsonIgnore
-    private Integer version;
+    private boolean vetrina;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id marca")//non so se devo metterlo nel db

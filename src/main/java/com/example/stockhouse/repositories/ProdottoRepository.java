@@ -45,6 +45,8 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Prodotto findProdottoById(int id);
 
+    List<Prodotto>findProdottosByVetrinaIsTrue();
+
 
 
 }

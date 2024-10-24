@@ -27,12 +27,20 @@ public class MarcaService {
         }
     }
     @Transactional(readOnly = true)
-    public List<Marca> findMarca(String nome){
+    public List<Marca> findMarcas(String nome){
         return marcaRepository.findMarcaByNomeContaining(nome);
     }
     @Transactional(readOnly = true)
     public List<Marca> listMarca(){
         return marcaRepository.findAllByOrderByNomeAsc();
 
+    }
+
+    public Marca findMarca(String nome){
+        return  marcaRepository.findMarcaByNome(nome);
+    }
+
+    public boolean existMarca(String nome){
+        return marcaRepository.existsByNome(nome);
     }
 }

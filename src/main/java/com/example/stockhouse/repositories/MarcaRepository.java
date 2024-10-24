@@ -14,4 +14,6 @@ public interface MarcaRepository extends JpaRepository<Marca, Integer> {
 
     Marca findMarcaByNome(String nome);
     List<Marca> findAllByOrderByNomeAsc();
+
+    Boolean existsByNome(String nome);
 }

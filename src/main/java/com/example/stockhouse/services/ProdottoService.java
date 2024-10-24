@@ -28,20 +28,20 @@ public class ProdottoService {
     public List<Prodotto> showAllProducts(int pageNumber, int pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
         Page<Prodotto> pagedResult = prodottoRepository.findAll(paging);
-        if ( pagedResult.hasContent() ) {
+        if (pagedResult.hasContent()) {
             return pagedResult.getContent();
-        }
-        else {
+        } else {
             return new ArrayList<>();
         }
     }
 
     @Transactional(readOnly = true)
-    public List<Prodotto> showProductsByName(String name){
+    public List<Prodotto> showProductsByName(String name) {
         return prodottoRepository.findProdottosByNome(name);
     }
+
     @Transactional(readOnly = true)
-    public List<Prodotto> showProductsByMarca(Marca marca){
+    public List<Prodotto> showProductsByMarca(Marca marca) {
         return prodottoRepository.findProdottosByMarca(marca);
     }
 
@@ -49,6 +49,7 @@ public class ProdottoService {
     public List<Prodotto> showProductsByNameAndDescription(String name, String description) {
         return prodottoRepository.advancedSearch(name, description);
     }
+
     @Transactional(readOnly = true)
     public boolean isProductAvailable(int productId) {
         return prodottoRepository.existsByIdAndQuantitaGreaterThan(productId, 0);
@@ -59,8 +60,8 @@ public class ProdottoService {
         return prodottoRepository.findProdottosWithPositiveQuantita();
     }
 
-    public void createProdotto(String nome, Integer prezzo,String descrizione, String immagini,Integer quantita, Marca marca){
-        if(prodottoRepository.findByNomeAndDescrizioneAndMarca( nome, descrizione, marca ) == null){
+    public void createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, Marca marca) {
+        if (prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, marca) == null) {
             Prodotto prodotto = new Prodotto();
             prodotto.setNome(nome);
             prodotto.setPrezzo(prezzo);
@@ -69,16 +70,15 @@ public class ProdottoService {
             prodotto.setQuantita(quantita);
             prodotto.setMarca(marca);
             prodottoRepository.save(prodotto);
-        }
-        else{
-            Prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca( nome, descrizione, marca );
-            p.setQuantita(p.getQuantita()+1);
+        } else {
+            Prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, marca);
+            p.setQuantita(p.getQuantita() + 1);
             prodottoRepository.save(p);
 
         }
     }
 
-    public void addQuantita(Prodotto prodotto, int quantita)throws ProdottoNotExist {
+    public void addQuantita(Prodotto prodotto, int quantita) throws ProdottoNotExist {
         if (prodottoRepository.findById(prodotto.getId()).isPresent()) {
             Prodotto p = prodottoRepository.findProdottoById(prodotto.getId());
             p.setQuantita(prodotto.getQuantita() + quantita);
@@ -87,4 +87,19 @@ public class ProdottoService {
         }
 
     }
+
+    @Transactional(readOnly = true)
+    public List<Prodotto> showVetrina() {
+        return prodottoRepository.findProdottosByVetrinaIsTrue();
     }
+
+    public void setVetrina(Prodotto prodotto) throws ProdottoNotExist {
+        if (prodottoRepository.existsById(prodotto.getId())) {
+            if (!(prodotto.isVetrina())) {
+                prodotto.setVetrina(true);
+            } else {
+                throw new ProdottoNotExist();
+            }
+        }
+    }
+}
