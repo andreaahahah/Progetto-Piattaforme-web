@@ -1,13 +1,12 @@
 package com.example.stockhouse.services;
 
 
-import com.example.stockhouse.entities.Carrello;
-import com.example.stockhouse.entities.DettaglioCarrello;
-import com.example.stockhouse.entities.Prodotto;
+import com.example.stockhouse.entities.carrello;
+import com.example.stockhouse.entities.dettaglio_carrello;
+import com.example.stockhouse.entities.prodotto;
 import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.DettaglioCarrelloRepository;
 import com.example.stockhouse.repositories.ProdottoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,32 +21,32 @@ public class DettaglioCarrelloService {
     }
 
 
-    public List<DettaglioCarrello> findDettagli(Carrello carrello){
+    public List<dettaglio_carrello> findDettagli(carrello carrello){
         return dettaglioCarrelloRepository.findByIdCarrello(carrello);
     }
-    public DettaglioCarrello findDettaglio(Carrello carrello, Prodotto prodotto){
+    public dettaglio_carrello findDettaglio(carrello carrello, prodotto prodotto){
         return dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
     }
-    public Prodotto findProdotto(int id_dettaglio){
+    public prodotto findProdotto(int id_dettaglio){
         return dettaglioCarrelloRepository.findProdottoByIdDettaglio(id_dettaglio);
     }
 
-    public void createDettaglioCarrello(Carrello carrello, Prodotto prodotto, int quantita) throws ProdottoNotExist {
-        DettaglioCarrello dettaglioCarrello = null;
+    public void createDettaglioCarrello(carrello carrello, prodotto prodotto, int quantita) throws ProdottoNotExist {
+        dettaglio_carrello dettagliocarrello = null;
         if(dettaglioCarrelloRepository.existsByIdCarrelloAndAndIdProdotto( carrello, prodotto)){
-            dettaglioCarrello = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
-            dettaglioCarrello.setQuantità(dettaglioCarrello.getQuantità()+quantita);
+            dettagliocarrello = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
+            dettagliocarrello.setQuantità(dettagliocarrello.getQuantità()+quantita);
         }
         else{
             if(prodottoRepository.existsById(prodotto.getId())){
-            dettaglioCarrello = new DettaglioCarrello();
-            dettaglioCarrello.setIdCarrello(carrello);
-            dettaglioCarrello.setIdProdotto(prodotto);
-            dettaglioCarrello.setQuantità(quantita);}
+            dettagliocarrello = new dettaglio_carrello();
+            dettagliocarrello.setIdCarrello(carrello);
+            dettagliocarrello.setIdProdotto(prodotto);
+            dettagliocarrello.setQuantità(quantita);}
             else{
                 throw new ProdottoNotExist();
             }
         }
-        dettaglioCarrelloRepository.save(dettaglioCarrello);
+        dettaglioCarrelloRepository.save(dettagliocarrello);
     }
 }

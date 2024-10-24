@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class Utente {
+public class utente {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,8 +22,8 @@ public class Utente {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "id carrello", nullable = true)//da vedere
-    private Carrello carrello;
+    @JoinColumn(name = "id_carrello", nullable = true)//da vedere
+    private com.example.stockhouse.entities.carrello carrello;
 
     @Basic
     @Column(name = "nome", nullable = false, length = -1)
@@ -41,23 +41,23 @@ public class Utente {
     @Column(name = "password", nullable = true, length = -1)
     private String password;
 
-    @OneToMany(targetEntity = Ordine.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = ordine.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Ordine> ordineLIst;
+    private List<ordine> ordineLIst;
 
-    @OneToMany(targetEntity = IndirizzoDiSpedizione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = indirizzo_di_spedizione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<IndirizzoDiSpedizione> indirizzoDiSpedizioneList;
+    private List<indirizzo_di_spedizione> indirizzodispedizioneList;
 
-    @OneToMany(targetEntity = Recensione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = recensione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Recensione>recensioneList;
+    private List<recensione>recensioneList;
 
-    @OneToMany(targetEntity = DatiDiPagamento.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = dati_di_pagamento.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<DatiDiPagamento>datiDiPagamentoList;
+    private List<dati_di_pagamento> datidipagamentoList;
 }

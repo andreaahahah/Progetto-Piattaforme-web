@@ -11,20 +11,20 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class ProdCate {
+public class prod_cate {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id prodcate", nullable = false)
+    @Column(name = "id_prodcate", nullable = false)
     private int idProdcate;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id prodotto", nullable = true)
-    private Prodotto idProdotto;
+    @JoinColumn(name = "id_prodotto", nullable = true)
+    private prodotto idProdotto;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id categoria", nullable = true)
-    private CategoriaProdotto idCategoria;
+    @JoinColumn(name = "id_categoria", nullable = true)
+    private categoria_prodotto idCategoria;
 
 
 

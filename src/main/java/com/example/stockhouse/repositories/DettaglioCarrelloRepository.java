@@ -1,8 +1,8 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.Carrello;
-import com.example.stockhouse.entities.DettaglioCarrello;
-import com.example.stockhouse.entities.Prodotto;
+import com.example.stockhouse.entities.carrello;
+import com.example.stockhouse.entities.dettaglio_carrello;
+import com.example.stockhouse.entities.prodotto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,18 +10,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DettaglioCarrelloRepository extends JpaRepository<DettaglioCarrello, Integer> {
+public interface DettaglioCarrelloRepository extends JpaRepository<dettaglio_carrello, Integer> {
 
-    List<DettaglioCarrello> findByIdCarrello(Carrello carrello);
+    List<dettaglio_carrello> findByIdCarrello(carrello carrello);
 
-    Boolean existsByIdCarrelloAndAndIdProdotto(Carrello carrello, Prodotto prodotto);
-    DettaglioCarrello findByIdCarrelloAndIdProdotto(Carrello carrello, Prodotto prodotto);
+    Boolean existsByIdCarrelloAndAndIdProdotto(carrello carrello, prodotto prodotto);
+    dettaglio_carrello findByIdCarrelloAndIdProdotto(carrello carrello, prodotto prodotto);
 
     @Query("SELECT dc.idProdotto " +
-            "FROM DettaglioCarrello dc "+
+            "FROM dettaglio_carrello dc "+
             "WHERE dc = ?1 "
     )
-    Prodotto findProdottoByIdDettaglio(int id);
+    prodotto findProdottoByIdDettaglio(int id);
 
 
 }

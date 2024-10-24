@@ -3,7 +3,6 @@ package com.example.stockhouse.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +11,11 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class Ordine {
+public class ordine {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id ordine", nullable = false)
+    @Column(name = "id_ordine", nullable = false)
     private int idOrdine;
 
     @Basic
@@ -27,25 +26,20 @@ public class Ordine {
     @Column(name = "totale", nullable = false, length = -1)
     private int totale;
 
-    @OneToOne
-    @JoinColumn(name = "id carrello", nullable = false)
-    private Carrello idCarrello;
-    //TODO metti una lista di dettagli carrello al suo posto
-
     @OneToMany(mappedBy = "ordine")
-    private List<DettaglioCarrello> dettagliCarrello;
+    private List<dettaglio_carrello> dettagliCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id indirizzo", nullable = false)
-    private IndirizzoDiSpedizione idIndirizzo;
+    @JoinColumn(name = "id_indirizzo", nullable = false)
+    private indirizzo_di_spedizione idIndirizzo;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id utente", nullable = false)
-    private Utente idUtente;
+    @JoinColumn(name = "id_utente", nullable = false)
+    private utente idUtente;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id pagamento", nullable = false)
-    private DatiDiPagamento idPagamento;
+    @JoinColumn(name = "id_pagamento", nullable = false)
+    private dati_di_pagamento idPagamento;
 
 
 }

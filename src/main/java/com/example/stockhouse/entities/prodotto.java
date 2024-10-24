@@ -14,9 +14,10 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class Prodotto {
+@Table(name="prodotto")
+public class prodotto {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "id", nullable = false)
     private int id;
@@ -39,8 +40,8 @@ public class Prodotto {
     private boolean vetrina;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id marca")//non so se devo metterlo nel db
-    private Marca marca;
+    @JoinColumn(name = "id_marca")//non so se devo metterlo nel db
+    private com.example.stockhouse.entities.marca marca;
 
     @Basic
     @Column(name = "nome", nullable = false, length = -1)
@@ -50,8 +51,8 @@ public class Prodotto {
     @Column(name = "descrizione", nullable = false, length = -1)
     private String descrizione;
 
-    @OneToMany(targetEntity = Recensione.class, mappedBy = "idProdotto", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = recensione.class, mappedBy = "idProdotto", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Recensione> recensioni;
+    private List<recensione> recensioni;
 }

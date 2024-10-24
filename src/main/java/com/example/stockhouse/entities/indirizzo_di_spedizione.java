@@ -11,16 +11,16 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "indirizzo di spedizione", schema = "public", catalog = "postgres")
-public class IndirizzoDiSpedizione {
+@Table(name = "indirizzo_di_spedizione", schema = "public", catalog = "postgres")
+public class indirizzo_di_spedizione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id utente", nullable = false)
-    private Utente idUtente;
+    @JoinColumn(name = "id_utente", nullable = false)
+    private utente idUtente;
 
     @Basic
     @Column(name = "via", nullable = false, length = -1)

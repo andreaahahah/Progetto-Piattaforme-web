@@ -1,9 +1,8 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.CategoriaProdotto;
+import com.example.stockhouse.entities.categoria_prodotto;
 import com.example.stockhouse.exceptions.CategoriaProdottoAlreadyExist;
 import com.example.stockhouse.repositories.CategoriaProdottoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,7 @@ public class CategoriaProdottoService {
 
     public void createCategoriaProdotto(String nome) throws CategoriaProdottoAlreadyExist {
         if(categoriaProdottoRepository.findCategoriaProdottoByNome(nome) == null){
-            CategoriaProdotto cp = new CategoriaProdotto();
+            categoria_prodotto cp = new categoria_prodotto();
             cp.setNome(nome);
             categoriaProdottoRepository.save(cp);
         }
@@ -30,7 +29,7 @@ public class CategoriaProdottoService {
     }
     public void createCategoriaProdotto(String nome, String descrizione) throws CategoriaProdottoAlreadyExist {
         if(categoriaProdottoRepository.findCategoriaProdottoByNome(nome) == null){
-            CategoriaProdotto cp = new CategoriaProdotto();
+            categoria_prodotto cp = new categoria_prodotto();
             cp.setNome(nome);
             cp.setDescrizione(descrizione);
             categoriaProdottoRepository.save(cp);
@@ -40,12 +39,12 @@ public class CategoriaProdottoService {
         }
     }
     @Transactional(readOnly = true)
-    public List<CategoriaProdotto> findCategoria(String nome){
+    public List<categoria_prodotto> findCategoria(String nome){
         return categoriaProdottoRepository.findByNomeContaining(nome);
     }
 
     @Transactional(readOnly = true)
-    public List<CategoriaProdotto> ordinaCategorie(){
+    public List<categoria_prodotto> ordinaCategorie(){
        return categoriaProdottoRepository.findAllByOrderByNomeAsc();
     }
 }

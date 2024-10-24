@@ -22,10 +22,9 @@ public record ProdottoDTO(
 
         boolean vetrina,
 
-        String nomaMarca
+        String nomeMarca,
 
-
-
+        String immagini
 
         ) {
 

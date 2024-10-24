@@ -13,35 +13,35 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "dati di pagamento", schema = "public", catalog = "postgres")
-public class DatiDiPagamento {
+@Table(name = "dati_di_pagamento", schema = "public", catalog = "postgres")
+public class dati_di_pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id pagamento", nullable = false)
+    @Column(name = "id_pagamento", nullable = false)
     private int idPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "id utente", nullable = false)
-    private Utente idUtente;
+    @JoinColumn(name = "id_utente", nullable = false)
+    private utente idUtente;
     
     @Basic
-    @Column(name = "data scadenza", nullable = false)
+    @Column(name = "data_scadenza", nullable = false)
     private Date dataScadenza;
 
     @Basic
-    @Column(name = "codice sicurezza", nullable = true, length = -1)
+    @Column(name = "codice_sicurezza", nullable = true, length = -1)
     private String codiceSicurezza;
 
     @Basic
-    @Column(name = "tipo carta", nullable = false, length = -1)
+    @Column(name = "tipo_carta", nullable = false, length = -1)
     private String tipoCarta;
 
     @Basic
-    @Column(name = "numero carta", nullable = false, length = -1)
+    @Column(name = "numero_carta", nullable = false, length = -1)
     private String numeroCarta;
 
     @Basic
-    @Column(name = "nome carta", nullable = false, length = -1)
+    @Column(name = "nome_carta", nullable = false, length = -1)
     private String nomeCarta;
 
 

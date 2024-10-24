@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class Carrello {
+public class carrello {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id carrello", nullable = false)
@@ -31,11 +31,11 @@ public class Carrello {
     private int totale_carrello;
 
     @OneToOne(mappedBy = "carrello")
-    private Utente utente;
+    private com.example.stockhouse.entities.utente utente;
 
-    @OneToMany(targetEntity = DettaglioCarrello.class, mappedBy = "idCarrello", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = dettaglio_carrello.class, mappedBy = "idCarrello", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<DettaglioCarrello> dettaglioCarrelloList;
+    private List<dettaglio_carrello> dettagliocarrelloList;
 
 }

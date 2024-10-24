@@ -11,8 +11,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "Categoria Prodotto", schema = "public", catalog = "postgres")
-public class CategoriaProdotto {
+@Table(name = "categoria_prodotto", schema = "public", catalog = "postgres")
+public class categoria_prodotto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)

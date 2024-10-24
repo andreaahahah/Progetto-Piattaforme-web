@@ -1,7 +1,7 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.IndirizzoDiSpedizione;
-import com.example.stockhouse.entities.Utente;
+import com.example.stockhouse.entities.indirizzo_di_spedizione;
+import com.example.stockhouse.entities.utente;
 import com.example.stockhouse.exceptions.IndirizzoDiSpedizioneAlreadyExist;
 import com.example.stockhouse.repositories.IndirizzoDiSpedizioneRepository;
 import org.springframework.stereotype.Service;
@@ -17,34 +17,34 @@ public class IndirizzoDiSpedizioneService {
         this.indirizzoDiSpedizioneRepository = indirizzoDiSpedizioneRepository;
     }
 
-    public List<IndirizzoDiSpedizione> findIndirizzi(Utente utente){
+    public List<indirizzo_di_spedizione> findIndirizzi(utente utente){
         return indirizzoDiSpedizioneRepository.findByIdUtente(utente);
     }
-    public void createIndirizzoDiSpedizione(Utente utente, String via,String città,String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
+    public void createIndirizzoDiSpedizione(utente utente, String via, String città, String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
-            IndirizzoDiSpedizione indirizzoDiSpedizione = new IndirizzoDiSpedizione();
-            indirizzoDiSpedizione.setIdUtente(utente);
-            indirizzoDiSpedizione.setVia(via);
-            indirizzoDiSpedizione.setCittà(città);
-            indirizzoDiSpedizione.setCap(cap);
-            indirizzoDiSpedizione.setNazione(nazione);
-            indirizzoDiSpedizioneRepository.save(indirizzoDiSpedizione);
+            indirizzo_di_spedizione indirizzodispedizione = new indirizzo_di_spedizione();
+            indirizzodispedizione.setIdUtente(utente);
+            indirizzodispedizione.setVia(via);
+            indirizzodispedizione.setCittà(città);
+            indirizzodispedizione.setCap(cap);
+            indirizzodispedizione.setNazione(nazione);
+            indirizzoDiSpedizioneRepository.save(indirizzodispedizione);
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();
         }
     }
 
-    public void createIndirizzoDiSpedizione(Utente utente, String via,String città,String cap, String nazione, String note) throws IndirizzoDiSpedizioneAlreadyExist {
+    public void createIndirizzoDiSpedizione(utente utente, String via, String città, String cap, String nazione, String note) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
-            IndirizzoDiSpedizione IndirizzoDiSpedizione = new IndirizzoDiSpedizione();
-            IndirizzoDiSpedizione.setIdUtente(utente);
-            IndirizzoDiSpedizione.setVia(via);
-            IndirizzoDiSpedizione.setCittà(città);
-            IndirizzoDiSpedizione.setCap(cap);
-            IndirizzoDiSpedizione.setNazione(nazione);
-            IndirizzoDiSpedizione.setNote(note);
-            indirizzoDiSpedizioneRepository.save(IndirizzoDiSpedizione);
+            indirizzo_di_spedizione indirizzo_di_spedizione = new indirizzo_di_spedizione();
+            indirizzo_di_spedizione.setIdUtente(utente);
+            indirizzo_di_spedizione.setVia(via);
+            indirizzo_di_spedizione.setCittà(città);
+            indirizzo_di_spedizione.setCap(cap);
+            indirizzo_di_spedizione.setNazione(nazione);
+            indirizzo_di_spedizione.setNote(note);
+            indirizzoDiSpedizioneRepository.save(indirizzo_di_spedizione);
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();

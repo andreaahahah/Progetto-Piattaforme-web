@@ -1,6 +1,6 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.Marca;
+import com.example.stockhouse.entities.marca;
 import com.example.stockhouse.exceptions.MarcaAlreadyExist;
 import com.example.stockhouse.repositories.MarcaRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class MarcaService {
     @Transactional
     public void createMarca(String nome) throws MarcaAlreadyExist {
         if(marcaRepository.findMarcaByNome(nome) == null){
-            Marca m = new Marca();
+            marca m = new marca();
             m.setNome(nome);
             marcaRepository.save(m);}
         else {
@@ -27,16 +27,16 @@ public class MarcaService {
         }
     }
     @Transactional(readOnly = true)
-    public List<Marca> findMarcas(String nome){
+    public List<marca> findMarcas(String nome){
         return marcaRepository.findMarcaByNomeContaining(nome);
     }
     @Transactional(readOnly = true)
-    public List<Marca> listMarca(){
+    public List<marca> listMarca(){
         return marcaRepository.findAllByOrderByNomeAsc();
 
     }
 
-    public Marca findMarca(String nome){
+    public marca findMarca(String nome){
         return  marcaRepository.findMarcaByNome(nome);
     }
 

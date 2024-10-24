@@ -1,19 +1,18 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.CategoriaProdotto;
-import com.example.stockhouse.entities.Marca;
+import com.example.stockhouse.entities.marca;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface MarcaRepository extends JpaRepository<Marca, Integer> {
+public interface MarcaRepository extends JpaRepository<marca, Integer> {
 
-    List<Marca> findMarcaByNomeContaining(String nome);
+    List<marca> findMarcaByNomeContaining(String nome);
 
-    Marca findMarcaByNome(String nome);
-    List<Marca> findAllByOrderByNomeAsc();
+    marca findMarcaByNome(String nome);
+    List<marca> findAllByOrderByNomeAsc();
 
     Boolean existsByNome(String nome);
 }

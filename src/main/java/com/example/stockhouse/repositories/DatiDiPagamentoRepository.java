@@ -1,17 +1,17 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.DatiDiPagamento;
-import com.example.stockhouse.entities.Utente;
+import com.example.stockhouse.entities.dati_di_pagamento;
+import com.example.stockhouse.entities.utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface DatiDiPagamentoRepository extends JpaRepository<DatiDiPagamento, Integer> {
+public interface DatiDiPagamentoRepository extends JpaRepository<dati_di_pagamento, Integer> {
 
-    List<DatiDiPagamento> findByIdUtente(Utente idUtente);
+    List<dati_di_pagamento> findByIdUtente(utente idUtente);
 
-    DatiDiPagamento findByIdUtenteAndNumeroCarta(Utente idUtente, String numeroCarta);
+    dati_di_pagamento findByIdUtenteAndNumeroCarta(utente idUtente, String numeroCarta);
 
 }

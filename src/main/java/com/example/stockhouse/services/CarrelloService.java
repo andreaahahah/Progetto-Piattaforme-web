@@ -1,11 +1,9 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.Carrello;
-import com.example.stockhouse.entities.DettaglioCarrello;
-import com.example.stockhouse.entities.Utente;
+import com.example.stockhouse.entities.carrello;
+import com.example.stockhouse.entities.dettaglio_carrello;
+import com.example.stockhouse.entities.utente;
 import com.example.stockhouse.repositories.CarrelloRepository;
-import com.example.stockhouse.repositories.UtenteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +18,10 @@ public class CarrelloService {
         this.carrelloRepository = carrelloRepository;
     }
 
-    public Carrello getCarrelloByUtente(Utente utente)
+    public carrello getCarrelloByUtente(utente utente)
     {
         if(carrelloRepository.findCarrelloByUtente(utente)==null){
-            Carrello carrello = new Carrello();
+            carrello carrello = new carrello();
             carrello.setUtente(utente);
             return carrelloRepository.save(carrello);
         }else {
@@ -33,17 +31,17 @@ public class CarrelloService {
     }
 
     @Transactional(readOnly = true)
-    public List<DettaglioCarrello> getDettagliCarrello(Integer idCarrello) {
-        Carrello carrello = carrelloRepository.findById(idCarrello)
+    public List<dettaglio_carrello> getDettagliCarrello(Integer idCarrello) {
+        carrello carrello = carrelloRepository.findById(idCarrello)
                 .orElseThrow(() -> new IllegalArgumentException("Carrello not found with ID: " + idCarrello));
-        return carrelloRepository.findDettagli(carrello);
+        return carrello.getDettagliocarrelloList();
     }
 
 
-    public Carrello createCarrello(Utente utente) {
-        Carrello c = carrelloRepository.findCarrelloByUtente(utente);
+    public carrello createCarrello(utente utente) {
+        carrello c = carrelloRepository.findCarrelloByUtente(utente);
         if(c ==null){
-            Carrello carrello = new Carrello();
+            carrello carrello = new carrello();
             carrello.setUtente(utente);
             carrelloRepository.save(carrello);
             return carrello;

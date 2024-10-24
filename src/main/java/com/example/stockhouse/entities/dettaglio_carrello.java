@@ -11,32 +11,32 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "Dettaglio Carrello", schema = "public", catalog = "postgres")
-public class DettaglioCarrello {
+@Table(name = "dettaglio_carrello", schema = "public", catalog = "postgres")
+public class dettaglio_carrello {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id dettaglio", nullable = false)
+    @Column(name = "id_dettaglio", nullable = false)
     private int idDettaglio;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id carrello", nullable = false)
-    private Carrello idCarrello;
+    @JoinColumn(name = "id_carrello", nullable = false)
+    private carrello idCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id prodotto", nullable = false)
-    private Prodotto idProdotto;
+    @JoinColumn(name = "id_prodotto", nullable = false)
+    private prodotto idProdotto;
 
     @Basic
     @Column(name = "qunatità", nullable = false)
     private Integer quantità;
-    // TODO aggiungi il prezzo
+
     @Basic
     @Column(name= "prezzo",nullable = false)
     private Integer prezzo;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="id ordine")
-    private Ordine ordine;
+    @JoinColumn(name ="id_ordine")
+    private com.example.stockhouse.entities.ordine ordine;
 
 
 }

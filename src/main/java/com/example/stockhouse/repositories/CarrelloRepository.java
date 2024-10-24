@@ -1,22 +1,17 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.Carrello;
-import com.example.stockhouse.entities.DettaglioCarrello;
-import com.example.stockhouse.entities.Utente;
+import com.example.stockhouse.entities.carrello;
+import com.example.stockhouse.entities.dettaglio_carrello;
+import com.example.stockhouse.entities.utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface CarrelloRepository extends JpaRepository<Carrello, Integer> {
 
-    Carrello findCarrelloByUtente(Utente u);
+public interface CarrelloRepository extends JpaRepository<carrello, Integer> {
 
-    @Query("SELECT c.dettaglioCarrelloList " +
-            "FROM Carrello c "+
-            "WHERE c.idCarrello = ?1 "
-    )
-    List<DettaglioCarrello>findDettagli(Carrello c);
+    carrello findCarrelloByUtente(utente u);
 
 
 

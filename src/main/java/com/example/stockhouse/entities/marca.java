@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class Marca {
+public class marca {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -25,8 +25,8 @@ public class Marca {
     @Column(name = "nome", nullable = false, length = -1)
     private String nome;
 
-    @OneToMany (targetEntity = Prodotto.class, mappedBy = "marca", cascade = CascadeType.ALL)
+    @OneToMany (targetEntity = prodotto.class, mappedBy = "marca", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Prodotto> prodotti;
+    private List<prodotto> prodotti;
 }
