@@ -1,7 +1,7 @@
 package com.example.stockhouse.repositories;
 
 import com.example.stockhouse.entities.marca;
-import com.example.stockhouse.entities.prodotto;
+import com.example.stockhouse.entities.Prodotto;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
@@ -12,38 +12,38 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface ProdottoRepository extends JpaRepository<prodotto, Integer> {
+public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
 
-    List<prodotto> findProdottosByPrezzoBetween(int prezzoMin, int prezzoMax);
+    List<Prodotto> findProdottosByPrezzoBetween(int prezzoMin, int prezzoMax);
     boolean existsByIdAndQuantitaGreaterThan(int id, int quantita);
 
-    List<prodotto> findProdottosByMarca(marca marca);
+    List<Prodotto> findProdottosByMarca(marca marca);
 
-    List<prodotto> findProdottosByNome(String nome);
+    List<Prodotto> findProdottosByNome(String nome);
 
-    prodotto findByNomeAndDescrizioneAndMarca(String nome, String descrizione, marca marca);
+    Prodotto findByNomeAndDescrizioneAndMarca(String nome, String descrizione, marca marca);
 
 
     @Query("SELECT p " +
-            "FROM prodotto as p" +
+            "FROM Prodotto as p" +
             " WHERE p.quantita > 0")
-    List<prodotto> findProdottosWithPositiveQuantita();
+    List<Prodotto> findProdottosWithPositiveQuantita();
 
 
 
     @Query("SELECT p " +
-            "FROM prodotto as p "+
+            "FROM Prodotto as p "+
             "WHERE (p.nome LIKE ?1 OR ?1 IS NULL) AND " +
             "(p.descrizione LIKE ?2 OR ?2 IS NULL)")
-    List<prodotto> advancedSearch(String name, String description);
+    List<Prodotto> advancedSearch(String name, String description);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    List<prodotto> findProdottosByIdIn(Set<Integer> prodotti);
+    List<Prodotto> findProdottosByIdIn(Set<Integer> prodotti);
 
 
-    prodotto findProdottoById(int id);
+    Prodotto findProdottoById(int id);
 
-    List<prodotto>findProdottosByVetrinaIsTrue();
+    List<Prodotto>findProdottosByVetrinaIsTrue();
 
     boolean existsById(int id);
 

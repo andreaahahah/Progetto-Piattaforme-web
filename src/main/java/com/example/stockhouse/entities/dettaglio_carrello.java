@@ -24,7 +24,7 @@ public class dettaglio_carrello {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_prodotto", nullable = false)
-    private prodotto idProdotto;
+    private Prodotto idProdotto;
 
     @Basic
     @Column(name = "qunatità", nullable = false)

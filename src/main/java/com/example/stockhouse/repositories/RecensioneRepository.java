@@ -1,6 +1,6 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.prodotto;
+import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.entities.recensione;
 import com.example.stockhouse.entities.utente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface RecensioneRepository extends JpaRepository<recensione, Integer> {
     List<recensione> findRecensioneByIdUtente(utente idUtente);
 
-    List<recensione> findRecensioneByIdProdotto(prodotto idProdotto);
+    List<recensione> findRecensioneByIdProdotto(Prodotto idProdotto);
 
-    recensione findRecensioneByIdUtenteAndAndIdProdotto(utente idUtente, prodotto idProdotto);
+    recensione findRecensioneByIdUtenteAndAndIdProdotto(utente idUtente, Prodotto idProdotto);
 }

@@ -3,7 +3,7 @@ package com.example.stockhouse.services;
 
 import com.example.stockhouse.entities.carrello;
 import com.example.stockhouse.entities.dettaglio_carrello;
-import com.example.stockhouse.entities.prodotto;
+import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.DettaglioCarrelloRepository;
 import com.example.stockhouse.repositories.ProdottoRepository;
@@ -24,14 +24,14 @@ public class DettaglioCarrelloService {
     public List<dettaglio_carrello> findDettagli(carrello carrello){
         return dettaglioCarrelloRepository.findByIdCarrello(carrello);
     }
-    public dettaglio_carrello findDettaglio(carrello carrello, prodotto prodotto){
+    public dettaglio_carrello findDettaglio(carrello carrello, Prodotto prodotto){
         return dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
     }
-    public prodotto findProdotto(int id_dettaglio){
+    public Prodotto findProdotto(int id_dettaglio){
         return dettaglioCarrelloRepository.findProdottoByIdDettaglio(id_dettaglio);
     }
 
-    public void createDettaglioCarrello(carrello carrello, prodotto prodotto, int quantita) throws ProdottoNotExist {
+    public void createDettaglioCarrello(carrello carrello, Prodotto prodotto, int quantita) throws ProdottoNotExist {
         dettaglio_carrello dettagliocarrello = null;
         if(dettaglioCarrelloRepository.existsByIdCarrelloAndAndIdProdotto( carrello, prodotto)){
             dettagliocarrello = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);

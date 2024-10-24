@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name="prodotto")
-public class prodotto {
+public class Prodotto {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id

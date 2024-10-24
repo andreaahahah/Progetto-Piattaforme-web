@@ -11,6 +11,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name="prod_cate")
 public class prod_cate {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class prod_cate {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_prodotto", nullable = true)
-    private prodotto idProdotto;
+    private Prodotto idProdotto;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_categoria", nullable = true)

@@ -14,6 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name ="utente")
 public class utente {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

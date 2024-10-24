@@ -13,6 +13,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name="recensione")
 public class recensione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,7 +23,7 @@ public class recensione {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_prodotto", nullable = false)
-    private prodotto idProdotto;
+    private Prodotto idProdotto;
 
     @Basic
     @Column(name = "valutazione", nullable = false)

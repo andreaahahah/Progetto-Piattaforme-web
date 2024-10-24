@@ -1,7 +1,7 @@
 package com.example.stockhouse.services;
 
 import com.example.stockhouse.entities.marca;
-import com.example.stockhouse.entities.prodotto;
+import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.ProdottoRepository;
 import org.springframework.data.domain.Page;
@@ -24,9 +24,9 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = true)
-    public List<prodotto> showAllProducts(int pageNumber, int pageSize, String sortBy) {
+    public List<Prodotto> showAllProducts(int pageNumber, int pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
-        Page<prodotto> pagedResult = prodottoRepository.findAll(paging);
+        Page<Prodotto> pagedResult = prodottoRepository.findAll(paging);
         if (pagedResult.hasContent()) {
             return pagedResult.getContent();
         } else {
@@ -35,17 +35,17 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = true)
-    public List<prodotto> showProductsByName(String name) {
+    public List<Prodotto> showProductsByName(String name) {
         return prodottoRepository.findProdottosByNome(name);
     }
 
     @Transactional(readOnly = true)
-    public List<prodotto> showProductsByMarca(marca marca) {
+    public List<Prodotto> showProductsByMarca(marca marca) {
         return prodottoRepository.findProdottosByMarca(marca);
     }
 
     @Transactional(readOnly = true)
-    public List<prodotto> showProductsByNameAndDescription(String name, String description) {
+    public List<Prodotto> showProductsByNameAndDescription(String name, String description) {
         return prodottoRepository.advancedSearch(name, description);
     }
 
@@ -55,13 +55,13 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = true)
-    public List<prodotto> showProductsAvailable() {
+    public List<Prodotto> showProductsAvailable() {
         return prodottoRepository.findProdottosWithPositiveQuantita();
     }
 
     public void createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, marca brand) {
         if (prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand) == null) {
-            prodotto prod = new prodotto();
+            Prodotto prod = new Prodotto();
             prod.setNome(nome);
             prod.setPrezzo(prezzo);
             prod.setDescrizione(descrizione);
@@ -70,16 +70,16 @@ public class ProdottoService {
             prod.setMarca(brand);
             prodottoRepository.save(prod);
         } else {
-            prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand);
+            Prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand);
             p.setQuantita(p.getQuantita() + 1);
             prodottoRepository.save(p);
 
         }
     }
 
-    public void addQuantita(prodotto prod, int quantita) throws ProdottoNotExist {
+    public void addQuantita(Prodotto prod, int quantita) throws ProdottoNotExist {
         if (prodottoRepository.findById(prod.getId()).isPresent()) {
-            prodotto p = prodottoRepository.findProdottoById(prod.getId());
+            Prodotto p = prodottoRepository.findProdottoById(prod.getId());
             p.setQuantita(prod.getQuantita() + quantita);
         } else {
             throw new ProdottoNotExist();
@@ -88,14 +88,14 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = true)
-    public List<prodotto> showVetrina() {
+    public List<Prodotto> showVetrina() {
         return prodottoRepository.findProdottosByVetrinaIsTrue();
     }
 
     public void setVetrina(int prod) throws ProdottoNotExist {
 
         if (prodottoRepository.existsById(prod)) {
-           prodotto p = prodottoRepository.findProdottoById(prod);
+           Prodotto p = prodottoRepository.findProdottoById(prod);
             p.setVetrina(true);
             prodottoRepository.save(p);
         } else {

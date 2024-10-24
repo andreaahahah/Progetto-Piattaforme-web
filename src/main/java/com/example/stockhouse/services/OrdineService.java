@@ -43,8 +43,8 @@ public class OrdineService {
         for(dettaglio_carrello dc: carrello.getDettagliocarrelloList()){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
         }
-        List<prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());
-        for(prodotto p: prodLock){
+        List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());
+        for(Prodotto p: prodLock){
             if(prodottoRepository.existsByIdAndQuantitaGreaterThan(p.getId(),p.getQuantita())){
                 p.setQuantita(p.getQuantita()- prodotti.get(p.getId()));}
             else{

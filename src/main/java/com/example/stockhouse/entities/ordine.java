@@ -11,6 +11,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name="ordine")
 public class ordine {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
