@@ -5,6 +5,8 @@ import com.example.stockhouse.exceptions.UtenteAlreadyExist;
 import com.example.stockhouse.repositories.UtenteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UtenteService {
     private final UtenteRepository utenteRepository;
@@ -14,7 +16,9 @@ public class UtenteService {
         this.carrelloService = carrelloService;
     }
 
-
+    public Optional<Utente> findUtente(int id){
+        return utenteRepository.findById(id);
+    }
     public Utente findUtente(String email){
         return utenteRepository.findByEmail(email);
     }
@@ -25,7 +29,7 @@ public class UtenteService {
             utente.setNome(nome);
             utente.setCognome(cognome);
             utente.setEmail(email);
-            utente.setCarrello(carrelloService.createCarrello(utente));//TODO modifica il db
+            utente.setCarrello(carrelloService.createCarrello(utente));
             utenteRepository.save(utente);
         }else{
             throw new UtenteAlreadyExist();
