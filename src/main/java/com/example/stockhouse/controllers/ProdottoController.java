@@ -1,7 +1,6 @@
 package com.example.stockhouse.controllers;
 
-import com.example.stockhouse.entities.marca;
-import com.example.stockhouse.repositories.MarcaRepository;
+import com.example.stockhouse.entities.Marca;
 import com.example.stockhouse.services.MarcaService;
 import com.example.stockhouse.services.ProdottoService;
 import jakarta.validation.constraints.NotNull;
@@ -49,7 +48,7 @@ public class ProdottoController {
             @RequestParam("img")@NotNull String immagini
     ){
         if(prezzo>0 && quantita>0 && !brand.isEmpty() && !nome.isEmpty() && !descrizione.isEmpty() && !immagini.isEmpty() && marcaService.existMarca(brand)) {
-            marca m = marcaService.findMarca(brand);
+            Marca m = marcaService.findMarca(brand);
             prodottoService.createProdotto(nome, prezzo, descrizione, immagini, quantita, m);
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         }

@@ -1,6 +1,6 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.marca;
+import com.example.stockhouse.entities.Marca;
 import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.ProdottoRepository;
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdottoService {
@@ -33,6 +34,11 @@ public class ProdottoService {
             return new ArrayList<>();
         }
     }
+    @Transactional(readOnly = true)
+    public Optional<Prodotto> getProd(int id){
+        return prodottoRepository.findById(id);
+    }
+
 
     @Transactional(readOnly = true)
     public List<Prodotto> showProductsByName(String name) {
@@ -40,7 +46,7 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Prodotto> showProductsByMarca(marca marca) {
+    public List<Prodotto> showProductsByMarca(Marca marca) {
         return prodottoRepository.findProdottosByMarca(marca);
     }
 
@@ -59,7 +65,7 @@ public class ProdottoService {
         return prodottoRepository.findProdottosWithPositiveQuantita();
     }
 
-    public void createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, marca brand) {
+    public void createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, Marca brand) {
         if (prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand) == null) {
             Prodotto prod = new Prodotto();
             prod.setNome(nome);

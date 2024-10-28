@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "indirizzo_di_spedizione", schema = "public", catalog = "postgres")
-public class indirizzo_di_spedizione {
+public class Indirizzo_di_spedizione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
@@ -20,7 +20,7 @@ public class indirizzo_di_spedizione {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_utente", nullable = false)
-    private utente idUtente;
+    private Utente idUtente;
 
     @Basic
     @Column(name = "via", nullable = false, length = -1)

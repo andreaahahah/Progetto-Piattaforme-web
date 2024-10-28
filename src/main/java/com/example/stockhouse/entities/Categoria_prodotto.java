@@ -1,33 +1,30 @@
 package com.example.stockhouse.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name="marca")
-public class marca {
-
+@Table(name = "categoria_prodotto", schema = "public", catalog = "postgres")
+public class Categoria_prodotto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private int id_categoria;
 
     @Basic
-    @Column(name = "nome", nullable = false, length = -1)
+    @Column(name = "nome", nullable = true, length = -1)
     private String nome;
 
-    @OneToMany (targetEntity = Prodotto.class, mappedBy = "marca", cascade = CascadeType.ALL)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<Prodotto> prodotti;
+    @Basic
+    @Column(name = "descrizione", nullable = true, length = -1)
+    private String descrizione;
+
+
 }

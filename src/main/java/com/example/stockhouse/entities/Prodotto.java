@@ -41,7 +41,7 @@ public class Prodotto {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_marca")//non so se devo metterlo nel db
-    private com.example.stockhouse.entities.marca marca;
+    private Marca marca;
 
     @Basic
     @Column(name = "nome", nullable = false, length = -1)
@@ -51,8 +51,8 @@ public class Prodotto {
     @Column(name = "descrizione", nullable = false, length = -1)
     private String descrizione;
 
-    @OneToMany(targetEntity = recensione.class, mappedBy = "idProdotto", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Recensione.class, mappedBy = "idProdotto", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<recensione> recensioni;
+    private List<Recensione> recensioni;
 }

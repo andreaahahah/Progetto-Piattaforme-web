@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name ="utente")
-public class utente {
+public class Utente {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -24,7 +24,7 @@ public class utente {
 
     @OneToOne
     @JoinColumn(name = "id_carrello", nullable = true)//da vedere
-    private com.example.stockhouse.entities.carrello carrello;
+    private Carrello carrello;
 
     @Basic
     @Column(name = "nome", nullable = false, length = -1)
@@ -42,23 +42,23 @@ public class utente {
     @Column(name = "password", nullable = true, length = -1)
     private String password;
 
-    @OneToMany(targetEntity = ordine.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Ordine.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<ordine> ordineLIst;
+    private List<Ordine> ordineLIst;
 
-    @OneToMany(targetEntity = indirizzo_di_spedizione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Indirizzo_di_spedizione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<indirizzo_di_spedizione> indirizzodispedizioneList;
+    private List<Indirizzo_di_spedizione> indirizzodispedizioneList;
 
-    @OneToMany(targetEntity = recensione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Recensione.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<recensione>recensioneList;
+    private List<Recensione>recensioneList;
 
-    @OneToMany(targetEntity = dati_di_pagamento.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Dati_di_pagamento.class, mappedBy = "idUtente", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<dati_di_pagamento> datidipagamentoList;
+    private List<Dati_di_pagamento> datidipagamentoList;
 }

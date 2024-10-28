@@ -1,12 +1,12 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.utente;
+import com.example.stockhouse.entities.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UtenteRepository extends JpaRepository<utente, Integer> {
+public interface UtenteRepository extends JpaRepository<Utente, Integer> {
 
-    utente findByEmail(String email);
+    Utente findByEmail(String email);
 
 }

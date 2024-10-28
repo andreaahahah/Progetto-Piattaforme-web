@@ -12,9 +12,9 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="prod_cate")
-public class prod_cate {
+public class Prod_cate {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "id_prodcate", nullable = false)
     private int idProdcate;
@@ -25,7 +25,7 @@ public class prod_cate {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_categoria", nullable = true)
-    private categoria_prodotto idCategoria;
+    private Categoria_prodotto idCategoria;
 
 
 

@@ -1,7 +1,7 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.indirizzo_di_spedizione;
-import com.example.stockhouse.entities.utente;
+import com.example.stockhouse.entities.Indirizzo_di_spedizione;
+import com.example.stockhouse.entities.Utente;
 import com.example.stockhouse.exceptions.IndirizzoDiSpedizioneAlreadyExist;
 import com.example.stockhouse.repositories.IndirizzoDiSpedizioneRepository;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ public class IndirizzoDiSpedizioneService {
         this.indirizzoDiSpedizioneRepository = indirizzoDiSpedizioneRepository;
     }
 
-    public List<indirizzo_di_spedizione> findIndirizzi(utente utente){
+    public List<Indirizzo_di_spedizione> findIndirizzi(Utente utente){
         return indirizzoDiSpedizioneRepository.findByIdUtente(utente);
     }
-    public void createIndirizzoDiSpedizione(utente utente, String via, String città, String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
+    public void createIndirizzoDiSpedizione(Utente utente, String via, String città, String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
-            indirizzo_di_spedizione indirizzodispedizione = new indirizzo_di_spedizione();
+            Indirizzo_di_spedizione indirizzodispedizione = new Indirizzo_di_spedizione();
             indirizzodispedizione.setIdUtente(utente);
             indirizzodispedizione.setVia(via);
             indirizzodispedizione.setCittà(città);
@@ -35,9 +35,9 @@ public class IndirizzoDiSpedizioneService {
         }
     }
 
-    public void createIndirizzoDiSpedizione(utente utente, String via, String città, String cap, String nazione, String note) throws IndirizzoDiSpedizioneAlreadyExist {
+    public void createIndirizzoDiSpedizione(Utente utente, String via, String città, String cap, String nazione, String note) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
-            indirizzo_di_spedizione indirizzo_di_spedizione = new indirizzo_di_spedizione();
+            Indirizzo_di_spedizione indirizzo_di_spedizione = new Indirizzo_di_spedizione();
             indirizzo_di_spedizione.setIdUtente(utente);
             indirizzo_di_spedizione.setVia(via);
             indirizzo_di_spedizione.setCittà(città);

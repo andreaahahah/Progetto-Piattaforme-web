@@ -1,6 +1,6 @@
 package com.example.stockhouse.repositories;
 
-import com.example.stockhouse.entities.marca;
+import com.example.stockhouse.entities.Marca;
 import com.example.stockhouse.entities.Prodotto;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,11 +17,11 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
     List<Prodotto> findProdottosByPrezzoBetween(int prezzoMin, int prezzoMax);
     boolean existsByIdAndQuantitaGreaterThan(int id, int quantita);
 
-    List<Prodotto> findProdottosByMarca(marca marca);
+    List<Prodotto> findProdottosByMarca(Marca marca);
 
     List<Prodotto> findProdottosByNome(String nome);
 
-    Prodotto findByNomeAndDescrizioneAndMarca(String nome, String descrizione, marca marca);
+    Prodotto findByNomeAndDescrizioneAndMarca(String nome, String descrizione, Marca marca);
 
 
     @Query("SELECT p " +

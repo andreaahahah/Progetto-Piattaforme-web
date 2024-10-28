@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name="ordine")
-public class ordine {
+public class Ordine {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -28,19 +28,19 @@ public class ordine {
     private int totale;
 
     @OneToMany(mappedBy = "ordine")
-    private List<dettaglio_carrello> dettagliCarrello;
+    private List<Dettaglio_carrello> dettagliCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_indirizzo", nullable = false)
-    private indirizzo_di_spedizione idIndirizzo;
+    private Indirizzo_di_spedizione idIndirizzo;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_utente", nullable = false)
-    private utente idUtente;
+    private Utente idUtente;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pagamento", nullable = false)
-    private dati_di_pagamento idPagamento;
+    private Dati_di_pagamento idPagamento;
 
 
 }

@@ -20,27 +20,27 @@ public class OrdineService {
         this.prodottoRepository = prodottoRepository;
     }
 
-    public dati_di_pagamento findPagamento(int idOrdine){
+    public Dati_di_pagamento findPagamento(int idOrdine){
 
         return ordineRepository.findIdPagamentoByIdOrdine(idOrdine);
     }
 
-    public List<ordine> findOrdini(Date data){
+    public List<Ordine> findOrdini(Date data){
 
         return ordineRepository.findOrdinesByData(data);
     }
 
-    public void createOrdine(utente utente, carrello carrello, indirizzo_di_spedizione indirizzodispedizione, dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
+    public void createOrdine(Utente utente, Carrello carrello, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
         //TODO VERIFICARE SE IL CARRELLO HA PRODOTTI CON QUANTITA' POSITIVA
 
-        ordine ordine = new ordine();
+        Ordine ordine = new Ordine();
         ordine.setIdUtente(utente);
         //ordine.setIdCarrello(carrello);
         ordine.setIdIndirizzo(indirizzodispedizione);
         ordine.setIdPagamento(datidipagamento);
 
         HashMap<Integer,Integer> prodotti = new HashMap<>();
-        for(dettaglio_carrello dc: carrello.getDettagliocarrelloList()){
+        for(Dettaglio_carrello dc: carrello.getDettagliocarrelloList()){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
         }
         List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());

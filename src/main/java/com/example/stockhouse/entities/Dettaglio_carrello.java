@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "dettaglio_carrello", schema = "public", catalog = "postgres")
-public class dettaglio_carrello {
+public class Dettaglio_carrello {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_dettaglio", nullable = false)
@@ -20,7 +20,7 @@ public class dettaglio_carrello {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_carrello", nullable = false)
-    private carrello idCarrello;
+    private Carrello idCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_prodotto", nullable = false)
@@ -36,7 +36,7 @@ public class dettaglio_carrello {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="id_ordine")
-    private com.example.stockhouse.entities.ordine ordine;
+    private Ordine ordine;
 
 
 }

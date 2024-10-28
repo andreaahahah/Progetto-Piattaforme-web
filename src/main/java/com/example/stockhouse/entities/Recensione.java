@@ -14,7 +14,7 @@ import java.util.Date;
 @ToString
 @Entity
 @Table(name="recensione")
-public class recensione {
+public class Recensione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
@@ -39,7 +39,7 @@ public class recensione {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_utente", nullable = false)
-    private utente idUtente;
+    private Utente idUtente;
 
 
 }

@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "dati_di_pagamento", schema = "public", catalog = "postgres")
-public class dati_di_pagamento {
+public class Dati_di_pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_pagamento", nullable = false)
@@ -22,7 +22,7 @@ public class dati_di_pagamento {
 
     @ManyToOne
     @JoinColumn(name = "id_utente", nullable = false)
-    private utente idUtente;
+    private Utente idUtente;
     
     @Basic
     @Column(name = "data_scadenza", nullable = false)

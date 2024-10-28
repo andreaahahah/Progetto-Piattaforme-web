@@ -1,8 +1,8 @@
 package com.example.stockhouse.services;
 
-import com.example.stockhouse.entities.carrello;
-import com.example.stockhouse.entities.dettaglio_carrello;
-import com.example.stockhouse.entities.utente;
+import com.example.stockhouse.entities.Carrello;
+import com.example.stockhouse.entities.Dettaglio_carrello;
+import com.example.stockhouse.entities.Utente;
 import com.example.stockhouse.repositories.CarrelloRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +18,10 @@ public class CarrelloService {
         this.carrelloRepository = carrelloRepository;
     }
 
-    public carrello getCarrelloByUtente(utente utente)
+    public Carrello getCarrelloByUtente(Utente utente)
     {
         if(carrelloRepository.findCarrelloByUtente(utente)==null){
-            carrello carrello = new carrello();
+            Carrello carrello = new Carrello();
             carrello.setUtente(utente);
             return carrelloRepository.save(carrello);
         }else {
@@ -31,17 +31,17 @@ public class CarrelloService {
     }
 
     @Transactional(readOnly = true)
-    public List<dettaglio_carrello> getDettagliCarrello(Integer idCarrello) {
-        carrello carrello = carrelloRepository.findById(idCarrello)
+    public List<Dettaglio_carrello> getDettagliCarrello(Integer idCarrello) {
+        Carrello carrello = carrelloRepository.findById(idCarrello)
                 .orElseThrow(() -> new IllegalArgumentException("Carrello not found with ID: " + idCarrello));
         return carrello.getDettagliocarrelloList();
     }
 
 
-    public carrello createCarrello(utente utente) {
-        carrello c = carrelloRepository.findCarrelloByUtente(utente);
+    public Carrello createCarrello(Utente utente) {
+        Carrello c = carrelloRepository.findCarrelloByUtente(utente);
         if(c ==null){
-            carrello carrello = new carrello();
+            Carrello carrello = new Carrello();
             carrello.setUtente(utente);
             carrelloRepository.save(carrello);
             return carrello;
