@@ -105,7 +105,7 @@ public class UtenteController {
             @RequestParam("citta")@NotNull String citta,
             @RequestParam("cap")@NotNull String cap,
             @RequestParam("nazione") @NotNull String nazione,
-            @RequestParam("note")  String note
+            @RequestParam(name = "note", required = false)  String note
     )
     {
         Optional<Utente> u = utenteService.findUtente(utente);
@@ -113,13 +113,14 @@ public class UtenteController {
             return ResponseEntity.badRequest().build();
         }
         try{
-            if(note.isBlank()) {
+            if(note == null) {
                 indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u.get(),via,citta,cap,nazione);
             }else {
                 indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u.get(),via,citta,cap,nazione,note);
             }
 
         }catch(Exception e){
+            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
