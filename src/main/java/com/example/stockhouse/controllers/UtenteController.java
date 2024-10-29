@@ -120,7 +120,6 @@ public class UtenteController {
             }
 
         }catch(Exception e){
-            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
