@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Optional;
 
 @RestController("utente")
@@ -56,16 +56,20 @@ public class UtenteController {
     }
     @PostMapping("addPagamento")
     public ResponseEntity<?> addPagamento(
-            @RequestParam("utente")@NotNull Utente utente,
+            @RequestParam("utente")@NotNull int utente,
             @RequestParam("n") @NotNull String numero,
-            @RequestParam("data")@NotNull Date data,
+            @RequestParam("data")@NotNull String data,//data da inviare in formato YYYY-MM-DD
             @RequestParam("tipo")@NotNull String tipo,
             @RequestParam("nome") @NotNull String nome
     ){
       //TODO sostituisci l'utente con il suo token
-        try{
-            datiDiPagamentoService.createDatoDiPagamento(utente,numero,data,tipo,nome);
+        Optional<Utente> u = utenteService.findUtente(utente);
+        if(u.isEmpty()){
 
+            return ResponseEntity.badRequest().build();
+        }
+        try{
+            datiDiPagamentoService.createDatoDiPagamento(u.get(),numero,Date.valueOf(data),tipo,nome);
         }catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -83,4 +87,41 @@ public class UtenteController {
         return ResponseEntity.ok( datiDiPagamentoService.findDatiDiPagamento(u.get()));
     }
 
+    @GetMapping("getIndirizzo")
+    public ResponseEntity<?> getIndirizzo(
+            @RequestParam("utente") @NotNull int utente
+    ){
+        Optional<Utente> u = utenteService.findUtente(utente);
+        if(u.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(indirizzoDiSpedizioneService.findIndirizzi(u.get()));
+    }
+
+    @PostMapping("addIndirizzo")
+    public ResponseEntity<?> addIndirizzo(
+            @RequestParam("utente")@NotNull int utente,
+            @RequestParam("via") @NotNull String via,
+            @RequestParam("citta")@NotNull String citta,
+            @RequestParam("cap")@NotNull String cap,
+            @RequestParam("nazione") @NotNull String nazione,
+            @RequestParam("note")  String note
+    )
+    {
+        Optional<Utente> u = utenteService.findUtente(utente);
+        if(u.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        try{
+            if(note.isBlank()) {
+                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u.get(),via,citta,cap,nazione);
+            }else {
+                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u.get(),via,citta,cap,nazione,note);
+            }
+
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

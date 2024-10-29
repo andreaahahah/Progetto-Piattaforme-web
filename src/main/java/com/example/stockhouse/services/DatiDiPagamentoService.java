@@ -6,7 +6,7 @@ import com.example.stockhouse.exceptions.DatoDiPagamentoAlreadyExist;
 import com.example.stockhouse.repositories.DatiDiPagamentoRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -23,16 +23,19 @@ public class DatiDiPagamentoService {
     }
 
     public void createDatoDiPagamento(Utente utente, String numeroCarta, Date dataScadenza, String tipoCarta, String nomeCarta) throws DatoDiPagamentoAlreadyExist {
+
         if(datiDiPagamentoRepository.findByIdUtenteAndNumeroCarta(utente, numeroCarta) == null){
+
             Dati_di_pagamento datidipagamento = new Dati_di_pagamento();
             datidipagamento.setIdUtente(utente);
             datidipagamento.setNumeroCarta(numeroCarta);
-            datidipagamento.setDataScadenza((java.sql.Date) dataScadenza);
+            datidipagamento.setDataScadenza( dataScadenza);
             datidipagamento.setTipoCarta(tipoCarta);
             datidipagamento.setNomeCarta(nomeCarta);
             datiDiPagamentoRepository.save(datidipagamento);
         }
         else{
+
             throw new DatoDiPagamentoAlreadyExist();
         }
     }
