@@ -29,9 +29,11 @@ public class UtenteService {
             utente.setNome(nome);
             utente.setCognome(cognome);
             utente.setEmail(email);
+            utenteRepository.save(utente);
             utente.setCarrello(carrelloService.createCarrello(utente));
             utenteRepository.save(utente);
         }else{
+
             throw new UtenteAlreadyExist();
         }
     }

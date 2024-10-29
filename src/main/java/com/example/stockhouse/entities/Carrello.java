@@ -1,5 +1,6 @@
 package com.example.stockhouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -31,6 +32,7 @@ public class Carrello {
     @Column(name = "totale carrello", nullable = true, length = -1)
     private int totale_carrello;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "carrello")
     private Utente utente;
 

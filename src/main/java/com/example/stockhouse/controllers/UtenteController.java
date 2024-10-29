@@ -47,7 +47,9 @@ public class UtenteController {
             @RequestParam("utente") @NotNull int utente
     ){
         Optional<Utente> u = utenteService.findUtente(utente);
+
         if(u.isEmpty()){
+
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(u.get());

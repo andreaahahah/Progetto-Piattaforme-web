@@ -1,6 +1,7 @@
 package com.example.stockhouse.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,11 +18,12 @@ import java.util.List;
 @Table(name ="utente")
 public class Utente {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "id", nullable = false)
     private int id;
 
+    @JsonManagedReference
     @OneToOne
     @JoinColumn(name = "id_carrello", nullable = true)//da vedere
     private Carrello carrello;
