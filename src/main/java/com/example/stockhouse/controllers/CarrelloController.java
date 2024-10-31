@@ -53,16 +53,16 @@ public class CarrelloController {
     ){
         Optional<Utente> u = utenteService.findUtente(utente);
         if(u.isEmpty()){
-            System.out.println("utente vuoto");
+
             return ResponseEntity.badRequest().build();
         }
         Optional<Prodotto> p = prodottoService.getProd(prodotto);
         if(p.isEmpty()){
-            System.out.println("non c'è il prodotto");
+
             return ResponseEntity.badRequest().build();
         }
         if(p.get().getQuantita()<quantita){
-            System.out.println("non c'è la quantita");
+
             return ResponseEntity.badRequest().build(); //TODO ritornare qualcosa di specifico
         }
         try {
@@ -110,13 +110,13 @@ public class CarrelloController {
             }
         }
         List<Dettaglio_carrello> dettaglio_carrelloList = new LinkedList<>();
-        System.out.println("arriva0");
+
         for(Prodotto p: prodottoList ){
-            System.out.println("arriva2");
+
             dettaglio_carrelloList.add( dettaglioCarrelloService.createDettaglioCarrello1(u.get().getCarrello(),p.getId(),p.getQuantita()));
         }
         try {
-            System.out.println("arriva1");
+
             ordineService.createOrdine(u.get(),dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u.get()),datiDiPagamentoService.find(u.get(),id_pagamento) );
 
         }catch (Exception e){

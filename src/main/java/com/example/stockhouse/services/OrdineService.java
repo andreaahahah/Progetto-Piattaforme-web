@@ -33,8 +33,8 @@ public class OrdineService {
 
     @Transactional
     public void createOrdine(Utente utente, List<Dettaglio_carrello>DettagliocarrelloList, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
-        //TODO VERIFICARE SE IL CARRELLO HA PRODOTTI CON QUANTITA' POSITIVA
 
+        int totale = 0;
         Ordine ordine = new Ordine();
         ordine.setIdUtente(utente);
         ordine.setIdIndirizzo(indirizzodispedizione);
@@ -44,15 +44,19 @@ public class OrdineService {
         for(Dettaglio_carrello dc: DettagliocarrelloList){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
         }
-        List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());
+        List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());//prendo il lock
+
         for(Prodotto p: prodLock){
-            if(prodottoRepository.existsByIdAndQuantitaGreaterThan(p.getId(),p.getQuantita())){
+            if(p.getQuantita()>= prodotti.get(p.getId())){
+
+                totale+=p.getPrezzo();
                 p.setQuantita(p.getQuantita()- prodotti.get(p.getId()));}
             else{
                 throw new ProdottoNotAvaible();
             }
         }
         prodottoRepository.saveAll(prodLock);
+        ordine.setTotale(totale);
         ordine.setDettagliCarrello(DettagliocarrelloList);
         ordineRepository.save(ordine);
 
