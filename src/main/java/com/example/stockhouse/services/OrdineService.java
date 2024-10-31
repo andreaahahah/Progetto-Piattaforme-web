@@ -5,6 +5,7 @@ import com.example.stockhouse.exceptions.ProdottoNotAvaible;
 import com.example.stockhouse.repositories.OrdineRepository;
 import com.example.stockhouse.repositories.ProdottoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,17 +31,17 @@ public class OrdineService {
         return ordineRepository.findOrdinesByData(data);
     }
 
-    public void createOrdine(Utente utente, Carrello carrello, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
+    @Transactional
+    public void createOrdine(Utente utente, List<Dettaglio_carrello>DettagliocarrelloList, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
         //TODO VERIFICARE SE IL CARRELLO HA PRODOTTI CON QUANTITA' POSITIVA
 
         Ordine ordine = new Ordine();
         ordine.setIdUtente(utente);
-        //ordine.setIdCarrello(carrello);
         ordine.setIdIndirizzo(indirizzodispedizione);
         ordine.setIdPagamento(datidipagamento);
 
         HashMap<Integer,Integer> prodotti = new HashMap<>();
-        for(Dettaglio_carrello dc: carrello.getDettagliocarrelloList()){
+        for(Dettaglio_carrello dc: DettagliocarrelloList){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
         }
         List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());
@@ -52,9 +53,13 @@ public class OrdineService {
             }
         }
         prodottoRepository.saveAll(prodLock);
-        ordine.setDettagliCarrello(carrello.getDettagliocarrelloList());// TODO è giusto?
+        ordine.setDettagliCarrello(DettagliocarrelloList);
         ordineRepository.save(ordine);
 
+    }
+
+    public List<Ordine> getOrdini(Utente utente){
+        return ordineRepository.findOrdinesByIdUtente(utente);
     }
 
 }

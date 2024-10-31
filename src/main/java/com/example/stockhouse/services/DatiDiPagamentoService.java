@@ -39,4 +39,10 @@ public class DatiDiPagamentoService {
             throw new DatoDiPagamentoAlreadyExist();
         }
     }
+    public boolean utenteHaPagamento(Utente utente,int id){
+        return datiDiPagamentoRepository.findByIdUtenteAndAndIdPagamento(utente,id)!=null;
+    }
+    public  Dati_di_pagamento find(Utente utente,int id){
+        return datiDiPagamentoRepository.findByIdUtenteAndAndIdPagamento(utente,id);
+    }
 }

@@ -31,7 +31,7 @@ public class DettaglioCarrelloService {
         return dettaglioCarrelloRepository.findProdottoByIdDettaglio(id_dettaglio);
     }
 
-    public void createDettaglioCarrello(Carrello carrello, Prodotto prodotto, int quantita) throws ProdottoNotExist {
+    public void createDettaglioCarrello(Carrello carrello, Prodotto prodotto, int quantita, int prezzo) throws ProdottoNotExist {
         Dettaglio_carrello dettagliocarrello = null;
         if(dettaglioCarrelloRepository.existsByIdCarrelloAndAndIdProdotto( carrello, prodotto)){
             dettagliocarrello = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
@@ -39,14 +39,28 @@ public class DettaglioCarrelloService {
         }
         else{
             if(prodottoRepository.existsById(prodotto.getId())){
-            dettagliocarrello = new Dettaglio_carrello();
-            dettagliocarrello.setIdCarrello(carrello);
-            dettagliocarrello.setIdProdotto(prodotto);
-            dettagliocarrello.setQuantità(quantita);}
+                dettagliocarrello = new Dettaglio_carrello();
+                dettagliocarrello.setIdCarrello(carrello);
+                dettagliocarrello.setIdProdotto(prodotto);
+                dettagliocarrello.setQuantità(quantita);
+                dettagliocarrello.setPrezzo(prezzo);
+            }
             else{
                 throw new ProdottoNotExist();
             }
         }
         dettaglioCarrelloRepository.save(dettagliocarrello);
+    }
+
+    public  Dettaglio_carrello createDettaglioCarrello1(Carrello carrello, int prodotto, int quantita){
+        Dettaglio_carrello dettagliocarrello = null;
+        dettagliocarrello = new Dettaglio_carrello();
+        dettagliocarrello.setIdCarrello(carrello);
+        dettagliocarrello.setIdProdotto(prodottoRepository.findProdottoById(prodotto));
+        dettagliocarrello.setQuantità(quantita);
+        int prezzo = prodottoRepository.findProdottoById(prodotto).getPrezzo();
+        dettagliocarrello.setPrezzo(prezzo);
+        dettaglioCarrelloRepository.save(dettagliocarrello);
+        return dettagliocarrello;
     }
 }

@@ -30,7 +30,7 @@ public class ProdCateController {
         return ResponseEntity.ok(categoriaProdottoService.getCategorie());
     }
 
-    @GetMapping("categorieProdotto")
+    @GetMapping("getCategorie")
     public ResponseEntity<?> getCategorie(
             @RequestParam(value = "prod")@NotNull int prodotto
     ){
@@ -41,7 +41,7 @@ public class ProdCateController {
         return ResponseEntity.ok(prodCateService.findCategorie(p.get()));
     }
 
-    @GetMapping("prodottiCategoria")
+    @GetMapping("getProdotti")
     public ResponseEntity<?> getProdotti(
             @RequestParam(value = "cate")@NotNull int categoria
     ){

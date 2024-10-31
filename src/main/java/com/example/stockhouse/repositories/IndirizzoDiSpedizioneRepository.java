@@ -12,5 +12,6 @@ public interface IndirizzoDiSpedizioneRepository extends JpaRepository<Indirizzo
     List<Indirizzo_di_spedizione> findByIdUtente(Utente utente);
     Indirizzo_di_spedizione findByIdUtenteAndVia(Utente utente, String via);
 
+    Indirizzo_di_spedizione findByIdUtenteAndId(Utente idUtente, int id);
 
 }

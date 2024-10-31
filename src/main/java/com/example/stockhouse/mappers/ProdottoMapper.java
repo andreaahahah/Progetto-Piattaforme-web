@@ -6,34 +6,17 @@ import com.example.stockhouse.repositories.MarcaRepository;
 
 public class ProdottoMapper {
 
-    private final MarcaRepository marcaRepository;
-
-    public ProdottoMapper(MarcaRepository marcaRepository) {
-        this.marcaRepository = marcaRepository;
-    }
-
-    public Prodotto aProdotto(ProdottoDTO prodottoDTO){
+    public static Prodotto aProdotto(ProdottoDTO prodottoDTO){
         Prodotto p = new Prodotto();
-        p.setPrezzo(prodottoDTO.prezzo());
+        p.setId(prodottoDTO.id());
         p.setQuantita(prodottoDTO.quantita());
-        p.setNome(prodottoDTO.nome());
-        p.setDescrizione(prodottoDTO.descrizione());
-        p.setVetrina(prodottoDTO.vetrina());
-        p.setMarca(marcaRepository.findMarcaByNome(prodottoDTO.nomeMarca()));
-        p.setImmagini(prodottoDTO.immagini());
         return  p;
     }
 
-    public  ProdottoDTO aDto(Prodotto prodotto){
+    public static ProdottoDTO aDto(Prodotto prodotto){
         ProdottoDTO pdt = new ProdottoDTO(
                 prodotto.getId(),
-                prodotto.getPrezzo(),
-                prodotto.getQuantita(),
-                prodotto.getNome(),
-                prodotto.getDescrizione(),
-                prodotto.isVetrina(),
-                prodotto.getMarca().getNome(),
-                prodotto.getImmagini()
+                prodotto.getQuantita()
         );
         return pdt;
     }

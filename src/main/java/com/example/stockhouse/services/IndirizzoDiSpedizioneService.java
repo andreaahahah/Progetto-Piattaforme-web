@@ -50,4 +50,12 @@ public class IndirizzoDiSpedizioneService {
             throw new IndirizzoDiSpedizioneAlreadyExist();
         }
     }
+
+    public boolean utenteHaIndirizzo(Utente utente, int indirizzoDiSpedizione){
+        return indirizzoDiSpedizioneRepository.findByIdUtenteAndId(utente, indirizzoDiSpedizione) != null;
+    }
+
+    public Indirizzo_di_spedizione find(int indirizzoDiSpedizione, Utente utente){
+        return indirizzoDiSpedizioneRepository.findByIdUtenteAndId(utente, indirizzoDiSpedizione);
+    }
 }

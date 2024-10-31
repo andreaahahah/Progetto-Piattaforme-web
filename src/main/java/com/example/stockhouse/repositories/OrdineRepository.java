@@ -3,6 +3,8 @@ package com.example.stockhouse.repositories;
 import com.example.stockhouse.entities.Dati_di_pagamento;
 import com.example.stockhouse.entities.Indirizzo_di_spedizione;
 import com.example.stockhouse.entities.Ordine;
+import com.example.stockhouse.entities.Utente;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +20,6 @@ public interface OrdineRepository extends JpaRepository<Ordine, Integer> {
     List<Ordine> findOrdinesByIdIndirizzo(Indirizzo_di_spedizione idIndirizzo);
 
     List<Ordine> findOrdinesByIdPagamento(Dati_di_pagamento dati_di_pagamento);
+
+    List<Ordine>findOrdinesByIdUtente(Utente utente);
 }

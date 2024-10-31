@@ -1,30 +1,17 @@
 package com.example.stockhouse.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 
 public record ProdottoDTO(
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+        @NotNull
         int id,
-
         @NotNull
-        int prezzo,
+                @Min(1)
+        int quantita
 
-        @NotNull
-        int quantita,
-
-        @NotNull
-        String nome,
-
-        @NotNull
-        String descrizione,
-
-        boolean vetrina,
-
-        String nomeMarca,
-
-        String immagini
 
         ) {
 

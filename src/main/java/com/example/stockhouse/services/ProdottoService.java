@@ -39,6 +39,10 @@ public class ProdottoService {
         return prodottoRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
+    public boolean esiste(int id){
+        return prodottoRepository.existsById(id);
+    }
 
     @Transactional(readOnly = true)
     public List<Prodotto> showProductsByName(String name) {

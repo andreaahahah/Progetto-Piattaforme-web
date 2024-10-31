@@ -3,6 +3,7 @@ package com.example.stockhouse.controllers;
 import com.example.stockhouse.entities.Utente;
 import com.example.stockhouse.services.DatiDiPagamentoService;
 import com.example.stockhouse.services.IndirizzoDiSpedizioneService;
+import com.example.stockhouse.services.OrdineService;
 import com.example.stockhouse.services.UtenteService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,13 @@ public class UtenteController {
     private  final UtenteService utenteService;
     private final DatiDiPagamentoService datiDiPagamentoService;
     private final IndirizzoDiSpedizioneService indirizzoDiSpedizioneService;
+    private final OrdineService ordineService;
 
-    public UtenteController(UtenteService utenteService, DatiDiPagamentoService datiDiPagamentoService, IndirizzoDiSpedizioneService indirizzoDiSpedizioneService) {
+    public UtenteController(UtenteService utenteService, DatiDiPagamentoService datiDiPagamentoService, IndirizzoDiSpedizioneService indirizzoDiSpedizioneService, OrdineService ordineService) {
         this.utenteService = utenteService;
         this.datiDiPagamentoService = datiDiPagamentoService;
         this.indirizzoDiSpedizioneService = indirizzoDiSpedizioneService;
+        this.ordineService = ordineService;
     }
 
     @PostMapping("addUtente")
@@ -123,5 +126,16 @@ public class UtenteController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("odini")
+    public ResponseEntity<?> getOrdini(
+            @RequestParam("utente") @NotNull int utente
+    ) {
+        Optional<Utente> u = utenteService.findUtente(utente);
+        if (u.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(ordineService.getOrdini(u.get()));
     }
 }
