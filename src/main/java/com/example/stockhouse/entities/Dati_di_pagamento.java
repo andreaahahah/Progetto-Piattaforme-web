@@ -1,5 +1,6 @@
 package com.example.stockhouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -22,6 +23,7 @@ public class Dati_di_pagamento {
 
     @ManyToOne
     @JoinColumn(name = "id_utente", nullable = false)
+    @JsonIgnore
     private Utente idUtente;
     
     @Basic

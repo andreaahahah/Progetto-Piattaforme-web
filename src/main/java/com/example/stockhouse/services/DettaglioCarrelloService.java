@@ -3,6 +3,7 @@ package com.example.stockhouse.services;
 
 import com.example.stockhouse.entities.Carrello;
 import com.example.stockhouse.entities.Dettaglio_carrello;
+import com.example.stockhouse.entities.Ordine;
 import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.DettaglioCarrelloRepository;
@@ -62,5 +63,10 @@ public class DettaglioCarrelloService {
         dettagliocarrello.setPrezzo(prezzo);
         dettaglioCarrelloRepository.save(dettagliocarrello);
         return dettagliocarrello;
+    }
+
+    public void setOrdine(Dettaglio_carrello dettaglioCarrello, Ordine ordine){
+        dettaglioCarrello.setOrdine(ordine);
+        dettaglioCarrelloRepository.save(dettaglioCarrello);
     }
 }

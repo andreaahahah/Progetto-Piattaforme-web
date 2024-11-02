@@ -1,5 +1,6 @@
 package com.example.stockhouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Dettaglio_carrello {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_carrello", nullable = false)
+    @JsonIgnore
     private Carrello idCarrello;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -36,6 +38,7 @@ public class Dettaglio_carrello {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="id_ordine")
+    @JsonIgnore
     private Ordine ordine;
 
 

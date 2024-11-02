@@ -1,5 +1,6 @@
 package com.example.stockhouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Indirizzo_di_spedizione {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_utente", nullable = false)
+    @JsonIgnore
     private Utente idUtente;
 
     @Basic

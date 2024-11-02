@@ -114,10 +114,12 @@ public class CarrelloController {
         for(Prodotto p: prodottoList ){
 
             dettaglio_carrelloList.add( dettaglioCarrelloService.createDettaglioCarrello1(u.get().getCarrello(),p.getId(),p.getQuantita()));
-        }
-        try {
 
+        }
+
+        try {
             ordineService.createOrdine(u.get(),dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u.get()),datiDiPagamentoService.find(u.get(),id_pagamento) );
+
 
         }catch (Exception e){
             System.out.println(e);

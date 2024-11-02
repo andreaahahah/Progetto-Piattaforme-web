@@ -1,5 +1,6 @@
 package com.example.stockhouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class Ordine {
     @Column(name = "id_ordine", nullable = false)
     private int idOrdine;
 
+
     @Basic
     @Column(name = "data", nullable = true, length = -1)
     private Date data;
@@ -36,6 +38,7 @@ public class Ordine {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_utente", nullable = false)
+
     private Utente idUtente;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -16,9 +16,12 @@ public class OrdineService {
     private final OrdineRepository ordineRepository;
     private final ProdottoRepository prodottoRepository;
 
-    public OrdineService(OrdineRepository ordineRepository, ProdottoRepository prodottoRepository) {
+    private final DettaglioCarrelloService dettaglioCarrelloService;
+
+    public OrdineService(OrdineRepository ordineRepository, ProdottoRepository prodottoRepository, DettaglioCarrelloService dettaglioCarrelloService) {
         this.ordineRepository = ordineRepository;
         this.prodottoRepository = prodottoRepository;
+        this.dettaglioCarrelloService = dettaglioCarrelloService;
     }
 
     public Dati_di_pagamento findPagamento(int idOrdine){
@@ -32,7 +35,7 @@ public class OrdineService {
     }
 
     @Transactional
-    public void createOrdine(Utente utente, List<Dettaglio_carrello>DettagliocarrelloList, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
+    public void createOrdine(Utente utente, List<Dettaglio_carrello>dettagliocarrelloList, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
 
         int totale = 0;
         Ordine ordine = new Ordine();
@@ -41,7 +44,7 @@ public class OrdineService {
         ordine.setIdPagamento(datidipagamento);
 
         HashMap<Integer,Integer> prodotti = new HashMap<>();
-        for(Dettaglio_carrello dc: DettagliocarrelloList){
+        for(Dettaglio_carrello dc: dettagliocarrelloList){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
         }
         List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());//prendo il lock
@@ -57,8 +60,14 @@ public class OrdineService {
         }
         prodottoRepository.saveAll(prodLock);
         ordine.setTotale(totale);
-        ordine.setDettagliCarrello(DettagliocarrelloList);
+        Date d = new Date();
+        ordine.setData(d);
+        ordine.setDettagliCarrello(dettagliocarrelloList);
         ordineRepository.save(ordine);
+        for(Dettaglio_carrello dc: dettagliocarrelloList){
+            dettaglioCarrelloService.setOrdine(dc, ordine);
+
+        }
 
     }
 
