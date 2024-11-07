@@ -33,9 +33,10 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
 
     @Query("SELECT p " +
             "FROM Prodotto as p "+
-            "WHERE (p.nome LIKE ?1 OR ?1 IS NULL) AND " +
-            "(p.descrizione LIKE ?2 OR ?2 IS NULL)")
-    List<Prodotto> advancedSearch(String name, String description);
+            "WHERE (p.nome LIKE %?1% OR ?1 IS NULL) OR " +
+            "(p.descrizione LIKE %?1% OR ?1 IS NULL)")
+    List<Prodotto> advancedSearch(String name);
+
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Prodotto> findProdottosByIdIn(Set<Integer> prodotti);

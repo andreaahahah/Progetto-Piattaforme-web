@@ -55,8 +55,8 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Prodotto> showProductsByNameAndDescription(String name, String description) {
-        return prodottoRepository.advancedSearch(name, description);
+    public List<Prodotto> showProductsByNameS(String name) {
+        return prodottoRepository.advancedSearch(name);
     }
 
     @Transactional(readOnly = true)

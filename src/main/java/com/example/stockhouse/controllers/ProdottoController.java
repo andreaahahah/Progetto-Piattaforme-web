@@ -31,6 +31,20 @@ public class ProdottoController {
     ){
         return ResponseEntity.ok(prodottoService.showAllProducts(page,size,sort));
     }
+    @GetMapping("getProdotto")
+    public  ResponseEntity<?> getProd(
+            @RequestParam ("prod")@NotNull int prod
+    ){
+        return ResponseEntity.ok(prodottoService.getProd(prod));
+    }
+
+    @GetMapping("getProdotti")
+    public  ResponseEntity<?> getVProdotti(
+            @RequestParam ("prod")@NotNull String prod
+    ){
+        return ResponseEntity.ok(prodottoService.showProductsByNameS(prod));
+    }
+
 
     @GetMapping("elencaVetrina")
     public  ResponseEntity<?> getVetrina(){
