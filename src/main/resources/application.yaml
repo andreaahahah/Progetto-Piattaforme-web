@@ -1,3 +1,6 @@
+server:
+  port: 8081  # Sostituisci con la porta che desideri usare
+
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/postgres"
@@ -11,5 +14,16 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
       ddl-auto: update
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/piattaforme
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+  jwt:
+    auth:
+      converter:
+        resource-id: pino
+        principal-attribute: admin

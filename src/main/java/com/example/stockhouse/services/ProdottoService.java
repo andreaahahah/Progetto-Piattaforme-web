@@ -112,5 +112,10 @@ public class ProdottoService {
             throw new ProdottoNotExist();
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<Prodotto> showProdByMarca( Marca marca) {
+        return prodottoRepository.findProdottosByMarca(marca);
+    }
 }
 

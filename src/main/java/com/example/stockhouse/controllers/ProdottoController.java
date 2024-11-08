@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("prodotto")
 public class ProdottoController {
@@ -49,6 +51,14 @@ public class ProdottoController {
     @GetMapping("elencaVetrina")
     public  ResponseEntity<?> getVetrina(){
         return ResponseEntity.ok(prodottoService.showVetrina());
+    }
+
+    @GetMapping("elencaProdByMarca")
+    public  ResponseEntity<?>getProdByMarca(
+            @RequestParam ("marca")@NotNull String marca
+    ){
+        Marca m = marcaService.findMarca(marca);
+        return ResponseEntity.ok(prodottoService.showProdByMarca(m));
     }
 
 

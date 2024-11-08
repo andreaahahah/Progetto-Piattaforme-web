@@ -31,6 +31,7 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
 
 
 
+
     @Query("SELECT p " +
             "FROM Prodotto as p "+
             "WHERE (p.nome LIKE %?1% OR ?1 IS NULL) OR " +

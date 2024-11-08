@@ -40,4 +40,6 @@ public class MarcaController {
     public ResponseEntity<?>getAllMarca(@RequestParam("nome") String nome){
         return ResponseEntity.ok(marcaService.findMarcas(nome));
     }
+
+
 }

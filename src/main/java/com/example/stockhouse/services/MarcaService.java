@@ -1,6 +1,7 @@
 package com.example.stockhouse.services;
 
 import com.example.stockhouse.entities.Marca;
+import com.example.stockhouse.entities.Prodotto;
 import com.example.stockhouse.exceptions.MarcaAlreadyExist;
 import com.example.stockhouse.repositories.MarcaRepository;
 import org.springframework.stereotype.Service;
@@ -43,4 +44,6 @@ public class MarcaService {
     public boolean existMarca(String nome){
         return marcaRepository.existsByNome(nome);
     }
+
+
 }
