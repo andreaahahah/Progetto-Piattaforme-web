@@ -14,7 +14,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,22 +85,27 @@ public class ProdottoController {
             @RequestParam("m")@NotNull String brand,
             @RequestParam("n")@NotNull String nome,
             @RequestParam("d")@NotNull String descrizione,
-            @RequestParam("img")@NotNull String immagini,
             @RequestParam("c")@NotNull String categoria,
-            @RequestParam("v")@NotNull Boolean vetrina
+            @RequestParam("v")@NotNull Boolean vetrina,
+            @RequestParam("files") MultipartFile[] files
     ) throws ProdottoNotExist {
-        System.out.println("Prezzo: " + prezzo);
-        System.out.println("Quantità: " + quantita);
-        System.out.println("Brand: " + brand);
-        System.out.println("Nome: " + nome);
-        System.out.println("Descrizione: " + descrizione);
-        System.out.println("Immagini: " + immagini);
-        System.out.println("La marca esiste: " + marcaService.existMarca(brand));
-        System.out.println("Categoria: " + categoria);
-            if (prezzo > 0 && quantita > 0 && !brand.isEmpty() && !nome.isEmpty() && !descrizione.isEmpty() && !immagini.isEmpty() && marcaService.existMarca(brand) && !categoria.isEmpty()) {
+
+        try {
+            if (prezzo > 0 && quantita > 0 && !brand.isEmpty() && !nome.isEmpty() && !descrizione.isEmpty() &&  marcaService.existMarca(brand) && !categoria.isEmpty()) {
+
+                List<String> encodedImages = new ArrayList<>();
+                for (MultipartFile file : files) {
+                    byte[] fileBytes = file.getBytes();
+                    String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+                    encodedImages.add(base64Encoded);
+                }
+                String concatenatedImages = String.join(",", encodedImages);
+
+
                 Marca m = marcaService.findMarca(brand);
 
-                int prod = prodottoService.createProdotto(nome, prezzo, descrizione, immagini, quantita, m);
+                int prod = prodottoService.createProdotto(nome, prezzo, descrizione, quantita, m);
+                prodottoService.setImage(prod,concatenatedImages);
                 String[] categorieArray = categoria.split(" ");
 
                 // Associa ogni categoria al prodotto
@@ -111,13 +119,19 @@ public class ProdottoController {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Categoria non valida: " + cate);
                     }
                 }
-                prodottoService.setVetrina(prod);
+                if (vetrina) {
+                    prodottoService.setVetrina(prod);
+                }
                 return ResponseEntity.ok().build();
             } else {
                 System.out.println(categoria);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
         }
+    }
 
     @PostMapping("vetrina")
     public ResponseEntity<?> setVetrina(@RequestParam("prod") @NotNull int id){
@@ -129,4 +143,6 @@ public class ProdottoController {
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
+
+
 }

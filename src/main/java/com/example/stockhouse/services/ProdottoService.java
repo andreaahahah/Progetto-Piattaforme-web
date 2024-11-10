@@ -69,13 +69,12 @@ public class ProdottoService {
         return prodottoRepository.findProdottosWithPositiveQuantita();
     }
 
-    public int createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, Marca brand) {
+    public int createProdotto(String nome, Integer prezzo, String descrizione, Integer quantita, Marca brand) {
         if (prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand) == null) {
             Prodotto prod = new Prodotto();
             prod.setNome(nome);
             prod.setPrezzo(prezzo);
             prod.setDescrizione(descrizione);
-            prod.setImmagini(immagini);
             prod.setQuantita(quantita);
             prod.setMarca(brand);
             prodottoRepository.save(prod);
@@ -119,6 +118,16 @@ public class ProdottoService {
     @Transactional(readOnly = true)
     public List<Prodotto> showProdByMarca( Marca marca) {
         return prodottoRepository.findProdottosByMarca(marca);
+    }
+
+    public void setImage(int id, String img)throws ProdottoNotExist{
+        if (prodottoRepository.existsById(id)) {
+            Prodotto p = prodottoRepository.findProdottoById(id);
+            p.setImmagini(img);
+            prodottoRepository.save(p);
+        } else {
+            throw new ProdottoNotExist();
+        }
     }
 }
 
