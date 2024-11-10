@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
 
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -30,14 +29,18 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
+        // Combina i ruoli di base con i ruoli aggiuntivi estratti dal JWT
         Collection<GrantedAuthority> authorities = Stream.concat(
                 jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
                 extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
+
+        // Crea il token di autenticazione con i ruoli e altre informazioni
         AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, authorities, getPrincipalClaimName(jwt));
         return token;
     }
 
     private String getPrincipalClaimName(Jwt jwt) {
+        // Se viene fornito un attributo principale personalizzato, usalo, altrimenti usa 'sub'
         String claimName = JwtClaimNames.SUB;
         if (properties.getPrincipalAttribute() != null) {
             claimName = properties.getPrincipalAttribute();
@@ -46,21 +49,28 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
         return jwt.getClaim(claimName);
     }
 
-
+    // Metodo aggiornato per estrarre i ruoli da "resource_access" e "realm_access"
     private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
+        // Estrai i ruoli da resource_access
         Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-        Map<String, Object> resource;
-        Collection<String> resourceRoles;
+        Map<String, Object> resourcePino = (Map<String, Object>) resourceAccess.get("pino");
+        Collection<String> pinoRoles = resourcePino != null ? (Collection<String>) resourcePino.get("roles") : Set.of();
 
-        if (resourceAccess == null
-                || (resource = (Map<String, Object>) resourceAccess.get(properties.getResourceId())) == null
-                || (resourceRoles = (Collection<String>) resource.get("roles")) == null) {
-
-            return Set.of();
+        // Estrai i ruoli da realm_access in modo sicuro
+        Collection<String> realmRoles = Set.of();
+        Map<String, Object> realmAccess = jwt.getClaim("realm_access");
+        if (realmAccess != null && realmAccess.containsKey("roles")) {
+            realmRoles = (Collection<String>) realmAccess.get("roles");
         }
 
-        return resourceRoles.stream()
+        // Combina i ruoli da entrambe le fonti (pino e realm_access)
+        Set<String> allRoles = Stream.concat(pinoRoles.stream(), realmRoles.stream())
+                .collect(Collectors.toSet());
+
+        // Restituisci i ruoli come autorità (ad esempio, ROLE_admin)
+        return allRoles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toSet());
     }
+
 }

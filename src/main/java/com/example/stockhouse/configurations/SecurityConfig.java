@@ -50,6 +50,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/prodottoCategoria/getProdotti").permitAll()
                         .requestMatchers(HttpMethod.GET,"/prodotto/getProdotti").permitAll()
                         .requestMatchers(HttpMethod.GET,"/prodotto/elencaProdByMarca").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/crea").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/prodotto/crea").hasRole("admin")
+
 //hasRole(nomeRuolo)
                         //hasAnyRole(piu ruoli)
                         .anyRequest().authenticated())

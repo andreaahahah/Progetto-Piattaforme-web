@@ -40,8 +40,8 @@ public class CategoriaProdottoService {
         }
     }
     @Transactional(readOnly = true)
-    public List<Categoria_prodotto> findCategoria(String nome){
-        return categoriaProdottoRepository.findByNomeContaining(nome);
+    public Optional<Categoria_prodotto> findCategoria(String nome){
+        return categoriaProdottoRepository.findCategoriaProdottoByNome(nome);
     }
 
     @Transactional(readOnly = true)

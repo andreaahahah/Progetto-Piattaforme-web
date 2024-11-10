@@ -75,6 +75,7 @@ public class ProdCateController {
             @RequestParam(value = "prod")@NotNull int prodotto,
             @RequestParam(value = "cate")@NotNull int categoria
     ){
+        //controlli già fatti nel service
         if(!prodCateService.addCategoria(prodotto, categoria)){
             return ResponseEntity.badRequest().build();
         }

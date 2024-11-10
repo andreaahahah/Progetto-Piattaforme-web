@@ -69,7 +69,7 @@ public class ProdottoService {
         return prodottoRepository.findProdottosWithPositiveQuantita();
     }
 
-    public void createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, Marca brand) {
+    public int createProdotto(String nome, Integer prezzo, String descrizione, String immagini, Integer quantita, Marca brand) {
         if (prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand) == null) {
             Prodotto prod = new Prodotto();
             prod.setNome(nome);
@@ -79,12 +79,15 @@ public class ProdottoService {
             prod.setQuantita(quantita);
             prod.setMarca(brand);
             prodottoRepository.save(prod);
+            return prod.getId();
         } else {
             Prodotto p = prodottoRepository.findByNomeAndDescrizioneAndMarca(nome, descrizione, brand);
-            p.setQuantita(p.getQuantita() + 1);
+            p.setQuantita(p.getQuantita() + quantita);
             prodottoRepository.save(p);
+            return  p.getId();
 
         }
+
     }
 
     public void addQuantita(Prodotto prod, int quantita) throws ProdottoNotExist {

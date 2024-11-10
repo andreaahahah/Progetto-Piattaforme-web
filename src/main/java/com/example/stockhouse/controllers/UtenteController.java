@@ -7,6 +7,8 @@ import com.example.stockhouse.services.OrdineService;
 import com.example.stockhouse.services.UtenteService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,6 +59,14 @@ public class UtenteController {
         }
         return ResponseEntity.ok(u.get());
     }
+    @GetMapping("solotoken")
+    public ResponseEntity<?> getEmail() {
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email"); // Estrai solo l'email
+
+        return ResponseEntity.ok(email); // Restituisci l'email come risposta
+    }
+
     @PostMapping("addPagamento")
     public ResponseEntity<?> addPagamento(
             @RequestParam("utente")@NotNull int utente,
@@ -66,6 +76,12 @@ public class UtenteController {
             @RequestParam("nome") @NotNull String nome
     ){
       //TODO sostituisci l'utente con il suo token
+
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
+        String email = jwt.getClaim("preferred_username");
+
         Optional<Utente> u = utenteService.findUtente(utente);
         if(u.isEmpty()){
 
