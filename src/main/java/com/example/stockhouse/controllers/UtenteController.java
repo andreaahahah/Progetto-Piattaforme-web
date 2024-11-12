@@ -1,5 +1,7 @@
 package com.example.stockhouse.controllers;
 
+import com.example.stockhouse.entities.Dati_di_pagamento;
+import com.example.stockhouse.entities.Indirizzo_di_spedizione;
 import com.example.stockhouse.entities.Utente;
 import com.example.stockhouse.services.DatiDiPagamentoService;
 import com.example.stockhouse.services.IndirizzoDiSpedizioneService;
@@ -9,15 +11,14 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
-@RestController("utente")
+@RestController()
+@RequestMapping("utente")
 public class UtenteController {
 
     private  final UtenteService utenteService;
@@ -69,7 +70,6 @@ public class UtenteController {
 
     @PostMapping("addPagamento")
     public ResponseEntity<?> addPagamento(
-            @RequestParam("utente")@NotNull int utente,
             @RequestParam("n") @NotNull String numero,
             @RequestParam("data")@NotNull String data,//data da inviare in formato YYYY-MM-DD
             @RequestParam("tipo")@NotNull String tipo,
@@ -78,17 +78,11 @@ public class UtenteController {
       //TODO sostituisci l'utente con il suo token
 
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
 
-
-        String email = jwt.getClaim("preferred_username");
-
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if(u.isEmpty()){
-
-            return ResponseEntity.badRequest().build();
-        }
+        Utente u = utenteService.findUtente(email);
         try{
-            datiDiPagamentoService.createDatoDiPagamento(u.get(),numero,Date.valueOf(data),tipo,nome);
+            datiDiPagamentoService.createDatoDiPagamento(u,numero,Date.valueOf(data),tipo,nome);
         }catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -96,30 +90,69 @@ public class UtenteController {
     }
 
     @GetMapping("getPagamento")
-    public ResponseEntity<?> getPagamento(
-            @RequestParam("utente") @NotNull int utente
-    ){
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if(u.isEmpty()){
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok( datiDiPagamentoService.findDatiDiPagamento(u.get()));
+    public ResponseEntity<?> getPagamento(){
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Recupera l'email dal token JWT
+        String email = (String) jwt.getClaims().get("email");
+
+        // Cerca l'utente in base all'email
+        Utente u = utenteService.findUtente(email); // Assicurati di avere questo metodo nel servizio utente
+
+        return ResponseEntity.ok( datiDiPagamentoService.findDatiDiPagamento(u));
     }
 
+    @GetMapping("getPagamentoById")
+    public ResponseEntity<?> getPagamentoById(
+            @RequestParam("id") @NotNull int id
+    ){
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
+        Utente u = utenteService.findUtente(email);
+
+        List<Dati_di_pagamento> datiDiPagamentoList = datiDiPagamentoService.findDatiDiPagamento(u);
+        for (Dati_di_pagamento d:datiDiPagamentoList) {
+            if(d.getIdPagamento() == id){
+                return ResponseEntity.ok(d);
+            }
+        }
+        return ResponseEntity.badRequest().build();
+
+    }
     @GetMapping("getIndirizzo")
     public ResponseEntity<?> getIndirizzo(
-            @RequestParam("utente") @NotNull int utente
+
     ){
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if(u.isEmpty()){
-            return ResponseEntity.badRequest().build();
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Recupera l'email dal token JWT
+        String email = (String) jwt.getClaims().get("email");
+
+        // Cerca l'utente in base all'email
+        Utente u = utenteService.findUtente(email);
+        return ResponseEntity.ok(indirizzoDiSpedizioneService.findIndirizzi(u));
+    }
+
+    @GetMapping("getIndirizzoById")
+    public ResponseEntity<?> getIndirizzoById(
+            @RequestParam("id") @NotNull int id
+    ){
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
+        Utente u = utenteService.findUtente(email);
+
+        List< Indirizzo_di_spedizione> indirizzoDiSpedizioneList = indirizzoDiSpedizioneService.findIndirizzi(u);
+        for (Indirizzo_di_spedizione i:indirizzoDiSpedizioneList) {
+            if(i.getId() == id){
+                return ResponseEntity.ok(i);
+            }
         }
-        return ResponseEntity.ok(indirizzoDiSpedizioneService.findIndirizzi(u.get()));
+        return ResponseEntity.badRequest().build();
+
     }
 
     @PostMapping("addIndirizzo")
     public ResponseEntity<?> addIndirizzo(
-            @RequestParam("utente")@NotNull int utente,
             @RequestParam("via") @NotNull String via,
             @RequestParam("citta")@NotNull String citta,
             @RequestParam("cap")@NotNull String cap,
@@ -127,15 +160,18 @@ public class UtenteController {
             @RequestParam(name = "note", required = false)  String note
     )
     {
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if(u.isEmpty()){
-            return ResponseEntity.badRequest().build();
-        }
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Recupera l'email dal token JWT
+        String email = (String) jwt.getClaims().get("email");
+
+        // Cerca l'utente in base all'email
+        Utente u = utenteService.findUtente(email);
         try{
             if(note == null) {
-                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u.get(),via,citta,cap,nazione);
+                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u,via,citta,cap,nazione);
             }else {
-                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u.get(),via,citta,cap,nazione,note);
+                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u,via,citta,cap,nazione,note);
             }
 
         }catch(Exception e){
@@ -144,14 +180,14 @@ public class UtenteController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("odini")
+    @GetMapping("ordini")
     public ResponseEntity<?> getOrdini(
-            @RequestParam("utente") @NotNull int utente
+
     ) {
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if (u.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(ordineService.getOrdini(u.get()));
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
+        Utente u = utenteService.findUtente(email);
+
+        return ResponseEntity.ok(ordineService.getOrdini(u));
     }
 }

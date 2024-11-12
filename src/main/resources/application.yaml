@@ -27,3 +27,8 @@ spring:
       converter:
         resource-id: pino
         principal-attribute: admin
+
+
+  logging:
+    level:
+      org.springframework.security: DEBUG

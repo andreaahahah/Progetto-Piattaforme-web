@@ -51,6 +51,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/prodotto/getProdotti").permitAll()
                         .requestMatchers(HttpMethod.GET,"/prodotto/elencaProdByMarca").permitAll()
                         .requestMatchers(HttpMethod.POST,"/crea").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/utente/getPagamento").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/utente/getIndirizzo").authenticated()
+
+                        .requestMatchers(HttpMethod.POST,"/utente/addIndirizzo").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/utente/addPagamento").authenticated()
                         .requestMatchers(HttpMethod.POST,"/prodotto/crea").hasRole("admin")
 
 //hasRole(nomeRuolo)

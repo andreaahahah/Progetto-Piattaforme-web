@@ -12,8 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("carrello")
-
+@RestController()
+@RequestMapping("carrello")
 public class CarrelloController {
 
     private final CarrelloService carrelloService;

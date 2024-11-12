@@ -90,6 +90,14 @@ public class ProdottoController {
             @RequestParam("files") MultipartFile[] files
     ) throws ProdottoNotExist {
 
+        System.out.println("Prezzo: " + prezzo);
+        System.out.println("Quantita: " + quantita);
+        System.out.println("Brand: " + brand);
+        System.out.println("Nome: " + nome);
+        System.out.println("Descrizione: " + descrizione);
+        System.out.println("Categoria: " + categoria);
+        System.out.println("Vetrina: " + vetrina);
+        System.out.println("Numero di file ricevuti: " + files.length);
         try {
             if (prezzo > 0 && quantita > 0 && !brand.isEmpty() && !nome.isEmpty() && !descrizione.isEmpty() &&  marcaService.existMarca(brand) && !categoria.isEmpty()) {
 
@@ -124,7 +132,6 @@ public class ProdottoController {
                 }
                 return ResponseEntity.ok().build();
             } else {
-                System.out.println(categoria);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }catch (Exception e){
