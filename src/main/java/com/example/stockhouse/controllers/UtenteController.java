@@ -50,22 +50,12 @@ public class UtenteController {
 
     @GetMapping("getUtente")
     public ResponseEntity<?> getUtente(
-            @RequestParam("utente") @NotNull int utente
     ){
-        Optional<Utente> u = utenteService.findUtente(utente);
-
-        if(u.isEmpty()){
-
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(u.get());
-    }
-    @GetMapping("solotoken")
-    public ResponseEntity<?> getEmail() {
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = (String) jwt.getClaims().get("email"); // Estrai solo l'email
+        String email = (String) jwt.getClaims().get("email");
 
-        return ResponseEntity.ok(email); // Restituisci l'email come risposta
+        Utente u = utenteService.findUtente(email);
+        return ResponseEntity.ok(u);
     }
 
     @PostMapping("addPagamento")
@@ -75,7 +65,7 @@ public class UtenteController {
             @RequestParam("tipo")@NotNull String tipo,
             @RequestParam("nome") @NotNull String nome
     ){
-      //TODO sostituisci l'utente con il suo token
+
 
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = (String) jwt.getClaims().get("email");

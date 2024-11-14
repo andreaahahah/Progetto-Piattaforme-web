@@ -6,6 +6,8 @@ import com.example.stockhouse.mappers.ProdottosMapper;
 import com.example.stockhouse.services.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
@@ -47,15 +49,14 @@ public class CarrelloController {
 
     @PostMapping("add")
     public ResponseEntity<?> addCarrello(
-            @RequestParam("utente") @NotNull int utente,
             @RequestParam("prodotto")@NotNull int prodotto,
             @RequestParam("quantita")@NotNull int quantita
     ){
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if(u.isEmpty()){
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
 
-            return ResponseEntity.badRequest().build();
-        }
+        Utente u = utenteService.findUtente(email);
+
         Optional<Prodotto> p = prodottoService.getProd(prodotto);
         if(p.isEmpty()){
 
@@ -66,7 +67,7 @@ public class CarrelloController {
             return ResponseEntity.badRequest().build(); //TODO ritornare qualcosa di specifico
         }
         try {
-            dettaglioCarrelloService.createDettaglioCarrello(u.get().getCarrello(), p.get(), quantita, p.get().getPrezzo());
+            dettaglioCarrelloService.createDettaglioCarrello(u.getCarrello(), p.get(), quantita, p.get().getPrezzo());
         }catch (Exception e){
             System.out.println(e);
             return ResponseEntity.badRequest().build();
@@ -76,38 +77,31 @@ public class CarrelloController {
 
     @GetMapping("elenca")
     public ResponseEntity<?>getDettagli(
-            @RequestParam("utente") @NotNull int utente
     ){
-        Optional<Utente> u = utenteService.findUtente(utente);
-        if(u.isEmpty()){
-            return ResponseEntity.badRequest().build();
-        }
-        List<Dettaglio_carrello> d = u.get().getCarrello().getDettagliocarrelloList();
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
+
+        Utente u = utenteService.findUtente(email);
+
+        List<Dettaglio_carrello> d = u.getCarrello().getDettagliocarrelloList();
         return ResponseEntity.ok(d);
     }
 
     @PostMapping("ordina")
     public ResponseEntity<?> ordina(
-            @RequestParam("utente") @NotNull int utente,
             @RequestParam("indirizzo")@NotNull int id_indirizzo,
             @RequestParam("pagamento")@NotNull int id_pagamento,
             @RequestBody @NotNull ProdottosDTO prodottosDTO
             ){
-        Optional<Utente> u = utenteService.findUtente(utente);
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
 
-        System.out.println("no utente "+u.isEmpty());
-        System.out.println("no indirizzo "+!indirizzoDiSpedizioneService.utenteHaIndirizzo(u.get(),id_indirizzo));
-        System.out.println("no pagamento "+!datiDiPagamentoService.utenteHaPagamento(u.get(),id_pagamento));
+        Utente u = utenteService.findUtente(email);
 
-
-
-        if(u.isEmpty()){
+        if (!indirizzoDiSpedizioneService.utenteHaIndirizzo(u,id_indirizzo)){
             return ResponseEntity.badRequest().build();
         }
-        if (!indirizzoDiSpedizioneService.utenteHaIndirizzo(u.get(),id_indirizzo)){
-            return ResponseEntity.badRequest().build();
-        }
-        if(!datiDiPagamentoService.utenteHaPagamento(u.get(),id_pagamento)){
+        if(!datiDiPagamentoService.utenteHaPagamento(u,id_pagamento)){
             return ResponseEntity.badRequest().build();
         }
         System.out.println("i prodotti sono" + prodottosDTO);
@@ -122,13 +116,13 @@ public class CarrelloController {
 
         for(Prodotto p: prodottoList ){
 
-            dettaglio_carrelloList.add( dettaglioCarrelloService.createDettaglioCarrello1(u.get().getCarrello(),p.getId(),p.getQuantita()));
+            dettaglio_carrelloList.add( dettaglioCarrelloService.createDettaglioCarrello1(u.getCarrello(),p.getId(),p.getQuantita()));
 
         }
 
         try {
             System.out.println("entro nel try");
-            ordineService.createOrdine(u.get(),dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u.get()),datiDiPagamentoService.find(u.get(),id_pagamento) );
+            ordineService.createOrdine(u,dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u),datiDiPagamentoService.find(u,id_pagamento) );
 
 
         }catch (Exception e){

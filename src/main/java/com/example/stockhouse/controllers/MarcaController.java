@@ -19,7 +19,7 @@ public class MarcaController {
     public ResponseEntity<?> crateMarca(
             @RequestParam("nome") String nome
     ){
-        //TODO verifica che possa aggiungere cioè deve avere i permessi
+
         if(nome != null && !nome.isEmpty() && !nome.equals(" ")) {
             try {
                 marcaService.createMarca(nome);
