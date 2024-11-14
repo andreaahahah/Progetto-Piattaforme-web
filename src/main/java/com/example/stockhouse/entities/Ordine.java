@@ -29,8 +29,10 @@ public class Ordine {
     @Column(name = "totale", nullable = false, length = -1)
     private int totale;
 
+
+
     @OneToMany(mappedBy = "ordine")
-    private List<Dettaglio_carrello> dettagliCarrello;
+    private List<Prod_ordinati> prodOrdinati;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_indirizzo", nullable = false)

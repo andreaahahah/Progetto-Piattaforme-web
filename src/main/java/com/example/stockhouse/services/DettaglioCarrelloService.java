@@ -9,6 +9,7 @@ import com.example.stockhouse.exceptions.ProdottoNotExist;
 import com.example.stockhouse.repositories.DettaglioCarrelloRepository;
 import com.example.stockhouse.repositories.ProdottoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -65,8 +66,8 @@ public class DettaglioCarrelloService {
         return dettagliocarrello;
     }
 
-    public void setOrdine(Dettaglio_carrello dettaglioCarrello, Ordine ordine){
-        dettaglioCarrello.setOrdine(ordine);
-        dettaglioCarrelloRepository.save(dettaglioCarrello);
+
+    public void eliminaDettagli(List<Dettaglio_carrello> dc){
+        dettaglioCarrelloRepository.deleteAll(dc);
     }
 }

@@ -19,12 +19,12 @@ public class Dettaglio_carrello {
     @Column(name = "id_dettaglio", nullable = false)
     private int idDettaglio;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_carrello", nullable = false)
     @JsonIgnore
     private Carrello idCarrello;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_prodotto", nullable = false)
     private Prodotto idProdotto;
 
@@ -36,10 +36,11 @@ public class Dettaglio_carrello {
     @Column(name= "prezzo",nullable = false)
     private Integer prezzo;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="id_ordine")
-    @JsonIgnore
-    private Ordine ordine;
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name ="id_ordine")
+    //@JsonIgnore
+    //private Ordine ordine;
+    // TODO DA ELIMINARE
 
 
 }

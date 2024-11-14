@@ -51,6 +51,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/prodotto/getProdotti").permitAll()
                         .requestMatchers(HttpMethod.GET,"/prodotto/elencaProdByMarca").permitAll()
                         .requestMatchers(HttpMethod.POST,"/crea").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/carrello/add").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/carrello/ordina").permitAll()
                         .requestMatchers(HttpMethod.GET,"/utente/getPagamento").authenticated()
                         .requestMatchers(HttpMethod.GET,"/utente/getIndirizzo").authenticated()
 

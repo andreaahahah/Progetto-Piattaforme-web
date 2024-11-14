@@ -94,6 +94,13 @@ public class CarrelloController {
             @RequestBody @NotNull ProdottosDTO prodottosDTO
             ){
         Optional<Utente> u = utenteService.findUtente(utente);
+
+        System.out.println("no utente "+u.isEmpty());
+        System.out.println("no indirizzo "+!indirizzoDiSpedizioneService.utenteHaIndirizzo(u.get(),id_indirizzo));
+        System.out.println("no pagamento "+!datiDiPagamentoService.utenteHaPagamento(u.get(),id_pagamento));
+
+
+
         if(u.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
@@ -103,8 +110,10 @@ public class CarrelloController {
         if(!datiDiPagamentoService.utenteHaPagamento(u.get(),id_pagamento)){
             return ResponseEntity.badRequest().build();
         }
+        System.out.println("i prodotti sono" + prodottosDTO);
         List<Prodotto> prodottoList = ProdottosMapper.aProdotto(prodottosDTO);
         for(Prodotto p: prodottoList ){
+            System.out.println("un prodotto non esiste "+!prodottoService.esiste(p.getId()));
             if(!prodottoService.esiste(p.getId())){
                 return ResponseEntity.badRequest().build();
             }
@@ -118,10 +127,12 @@ public class CarrelloController {
         }
 
         try {
+            System.out.println("entro nel try");
             ordineService.createOrdine(u.get(),dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u.get()),datiDiPagamentoService.find(u.get(),id_pagamento) );
 
 
         }catch (Exception e){
+            System.out.println();
             System.out.println(e);
             return ResponseEntity.badRequest().build();
         }

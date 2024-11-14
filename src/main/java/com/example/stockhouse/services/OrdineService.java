@@ -3,12 +3,14 @@ package com.example.stockhouse.services;
 import com.example.stockhouse.entities.*;
 import com.example.stockhouse.exceptions.ProdottoNotAvaible;
 import com.example.stockhouse.repositories.OrdineRepository;
+import com.example.stockhouse.repositories.ProdOrdinatiRepository;
 import com.example.stockhouse.repositories.ProdottoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -17,11 +19,13 @@ public class OrdineService {
     private final ProdottoRepository prodottoRepository;
 
     private final DettaglioCarrelloService dettaglioCarrelloService;
+    private final ProdOrdinatiRepository prodOrdinatiRepository;
 
-    public OrdineService(OrdineRepository ordineRepository, ProdottoRepository prodottoRepository, DettaglioCarrelloService dettaglioCarrelloService) {
+    public OrdineService(OrdineRepository ordineRepository, ProdottoRepository prodottoRepository, DettaglioCarrelloService dettaglioCarrelloService, ProdOrdinatiRepository prodOrdinatiRepository) {
         this.ordineRepository = ordineRepository;
         this.prodottoRepository = prodottoRepository;
         this.dettaglioCarrelloService = dettaglioCarrelloService;
+        this.prodOrdinatiRepository = prodOrdinatiRepository;
     }
 
     public Dati_di_pagamento findPagamento(int idOrdine){
@@ -51,7 +55,6 @@ public class OrdineService {
 
         for(Prodotto p: prodLock){
             if(p.getQuantita()>= prodotti.get(p.getId())){
-
                 totale+=p.getPrezzo();
                 p.setQuantita(p.getQuantita()- prodotti.get(p.getId()));}
             else{
@@ -62,12 +65,23 @@ public class OrdineService {
         ordine.setTotale(totale);
         Date d = new Date();
         ordine.setData(d);
-        ordine.setDettagliCarrello(dettagliocarrelloList);
         ordineRepository.save(ordine);
+       List<Prod_ordinati> prodOrdinatiList = new LinkedList<>();
         for(Dettaglio_carrello dc: dettagliocarrelloList){
-            dettaglioCarrelloService.setOrdine(dc, ordine);
+            Prod_ordinati prodOrdinati = new Prod_ordinati();
+
+            prodOrdinati.setOrdine(ordine);
+            prodOrdinati.setProdotto(dc.getIdProdotto());
+            prodOrdinati.setPrezzo(dc.getPrezzo());
+            prodOrdinati.setQuantita(dc.getQuantità());
+            prodOrdinatiRepository.save(prodOrdinati);
+            prodOrdinatiList.add(prodOrdinati);
+
 
         }
+
+        ordine.setProdOrdinati(prodOrdinatiList);
+        dettaglioCarrelloService.eliminaDettagli(dettagliocarrelloList);
 
     }
 
