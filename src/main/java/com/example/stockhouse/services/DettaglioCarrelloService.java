@@ -71,4 +71,12 @@ public class DettaglioCarrelloService {
     public void eliminaDettagli(List<Dettaglio_carrello> dc){
         dettaglioCarrelloRepository.deleteAll(dc);
     }
+
+    public void trovaedElimina(Prodotto prodotto, Carrello carrello){
+        if(dettaglioCarrelloRepository.existsByIdCarrelloAndAndIdProdotto(carrello, prodotto)){
+        Dettaglio_carrello d = dettaglioCarrelloRepository.findByIdCarrelloAndIdProdotto(carrello, prodotto);
+        dettaglioCarrelloRepository.delete(d);
+        }
+
+    }
 }

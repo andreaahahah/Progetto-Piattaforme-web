@@ -101,7 +101,7 @@ public class ProdottoService {
 
     @Transactional(readOnly = true)
     public List<Prodotto> showVetrina() {
-        return prodottoRepository.findProdottosByVetrinaIsTrue();
+        return prodottoRepository.findProdottosByVetrinaIsTrueAndQuantitaGreaterThan(0);
     }
 
     public void setVetrina(int prod) throws ProdottoNotExist {

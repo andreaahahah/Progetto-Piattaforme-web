@@ -45,7 +45,7 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Integer> {
 
     Prodotto findProdottoById(int id);
 
-    List<Prodotto>findProdottosByVetrinaIsTrue();
+    List<Prodotto>findProdottosByVetrinaIsTrueAndQuantitaGreaterThan(int quantità);
 
     boolean existsById(int id);
 

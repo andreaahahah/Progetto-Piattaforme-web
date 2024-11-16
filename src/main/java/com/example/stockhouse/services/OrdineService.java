@@ -47,25 +47,31 @@ public class OrdineService {
         ordine.setIdIndirizzo(indirizzodispedizione);
         ordine.setIdPagamento(datidipagamento);
 
+        //mi creo la mappa per associare id prodotti e la loro quantià
         HashMap<Integer,Integer> prodotti = new HashMap<>();
         for(Dettaglio_carrello dc: dettagliocarrelloList){
             prodotti.put(dc.getIdProdotto().getId(),dc.getQuantità());
         }
-        List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());//prendo il lock
+        //prendo il lock
+        List<Prodotto> prodLock = prodottoRepository.findProdottosByIdIn(prodotti.keySet());
 
+        //verifico che esiste la quantità richiesta
         for(Prodotto p: prodLock){
             if(p.getQuantita()>= prodotti.get(p.getId())){
-                totale+=p.getPrezzo();
+                totale+=p.getPrezzo()*prodotti.get(p.getId());
                 p.setQuantita(p.getQuantita()- prodotti.get(p.getId()));}
             else{
-                throw new ProdottoNotAvaible();
+                throw new ProdottoNotAvaible();//TODO da gestite nel controller
             }
         }
+        //salvo i prodotti perchè ho modificato la loro quantià
         prodottoRepository.saveAll(prodLock);
         ordine.setTotale(totale);
         Date d = new Date();
         ordine.setData(d);
         ordineRepository.save(ordine);
+
+        //creo i prodotti ordinati che associo all'ordine
        List<Prod_ordinati> prodOrdinatiList = new LinkedList<>();
         for(Dettaglio_carrello dc: dettagliocarrelloList){
             Prod_ordinati prodOrdinati = new Prod_ordinati();
@@ -79,8 +85,8 @@ public class OrdineService {
 
 
         }
-
         ordine.setProdOrdinati(prodOrdinatiList);
+
         dettaglioCarrelloService.eliminaDettagli(dettagliocarrelloList);
 
     }

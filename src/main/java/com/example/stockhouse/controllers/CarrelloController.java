@@ -92,6 +92,7 @@ public class CarrelloController {
             @RequestParam("pagamento")@NotNull int id_pagamento,
             @RequestBody @NotNull ProdottosDTO prodottosDTO
             ){
+
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = (String) jwt.getClaims().get("email");
 
@@ -131,4 +132,21 @@ public class CarrelloController {
     }
 
 
+    @PostMapping("rimuovi")
+    public ResponseEntity<?> elimina(
+            @RequestParam("prodotto")@NotNull int prodotto
+    ){
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) jwt.getClaims().get("email");
+        Utente u = utenteService.findUtente(email);
+        Optional<Prodotto> p = prodottoService.getProd(prodotto);
+        if(p.isEmpty()){
+            return ResponseEntity.badRequest().build();
+
+        }
+        Carrello carrello = u.getCarrello();
+        dettaglioCarrelloService.trovaedElimina(p.get(),carrello);
+        return  ResponseEntity.ok().build();
+
+    }
 }
