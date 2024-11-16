@@ -8,6 +8,7 @@ import com.example.stockhouse.services.IndirizzoDiSpedizioneService;
 import com.example.stockhouse.services.OrdineService;
 import com.example.stockhouse.services.UtenteService;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -43,7 +44,7 @@ public class UtenteController {
             utenteService.createUtente(nome, cognome, email);
         }
         catch (Exception e){
-            return  ResponseEntity.badRequest().build();
+            return  ResponseEntity.status(HttpStatus.CONTINUE).build();
         }
         return ResponseEntity.ok().build();
     }
@@ -64,19 +65,20 @@ public class UtenteController {
             @RequestParam("data")@NotNull String data,//data da inviare in formato YYYY-MM-DD
             @RequestParam("tipo")@NotNull String tipo,
             @RequestParam("nome") @NotNull String nome
-    ){
+    ) {
 
 
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = (String) jwt.getClaims().get("email");
 
         Utente u = utenteService.findUtente(email);
-        try{
-            datiDiPagamentoService.createDatoDiPagamento(u,numero,Date.valueOf(data),tipo,nome);
-        }catch(Exception e){
+        Dati_di_pagamento d;
+        try {
+            d = datiDiPagamentoService.createDatoDiPagamento(u, numero, Date.valueOf(data), tipo, nome);
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(d);
     }
 
     @GetMapping("getPagamento")
@@ -157,11 +159,12 @@ public class UtenteController {
 
         // Cerca l'utente in base all'email
         Utente u = utenteService.findUtente(email);
+        Indirizzo_di_spedizione i ;
         try{
             if(note == null) {
-                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u,via,citta,cap,nazione);
+               i = indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u,via,citta,cap,nazione);
             }else {
-                indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u,via,citta,cap,nazione,note);
+               i = indirizzoDiSpedizioneService.createIndirizzoDiSpedizione(u,via,citta,cap,nazione,note);
             }
 
         }catch(Exception e){

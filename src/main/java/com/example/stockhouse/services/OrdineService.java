@@ -40,7 +40,7 @@ public class OrdineService {
 
     @Transactional
     public void createOrdine(Utente utente, List<Dettaglio_carrello>dettagliocarrelloList, Indirizzo_di_spedizione indirizzodispedizione, Dati_di_pagamento datidipagamento) throws ProdottoNotAvaible {
-
+//diminiusci la quantita dai dettagli
         int totale = 0;
         Ordine ordine = new Ordine();
         ordine.setIdUtente(utente);

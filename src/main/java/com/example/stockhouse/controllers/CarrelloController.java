@@ -54,7 +54,6 @@ public class CarrelloController {
     ){
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = (String) jwt.getClaims().get("email");
-
         Utente u = utenteService.findUtente(email);
 
         Optional<Prodotto> p = prodottoService.getProd(prodotto);
@@ -115,9 +114,7 @@ public class CarrelloController {
         List<Dettaglio_carrello> dettaglio_carrelloList = new LinkedList<>();
 
         for(Prodotto p: prodottoList ){
-
             dettaglio_carrelloList.add( dettaglioCarrelloService.createDettaglioCarrello1(u.getCarrello(),p.getId(),p.getQuantita()));
-
         }
 
         try {

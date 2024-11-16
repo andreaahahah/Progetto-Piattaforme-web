@@ -22,7 +22,7 @@ public class DatiDiPagamentoService {
         return datiDiPagamentoRepository.findByIdUtente(idUtente);
     }
 
-    public void createDatoDiPagamento(Utente utente, String numeroCarta, Date dataScadenza, String tipoCarta, String nomeCarta) throws DatoDiPagamentoAlreadyExist {
+    public Dati_di_pagamento createDatoDiPagamento(Utente utente, String numeroCarta, Date dataScadenza, String tipoCarta, String nomeCarta) throws DatoDiPagamentoAlreadyExist {
 
         if(datiDiPagamentoRepository.findByIdUtenteAndNumeroCarta(utente, numeroCarta) == null){
 
@@ -33,6 +33,7 @@ public class DatiDiPagamentoService {
             datidipagamento.setTipoCarta(tipoCarta);
             datidipagamento.setNomeCarta(nomeCarta);
             datiDiPagamentoRepository.save(datidipagamento);
+            return datidipagamento;
         }
         else{
 

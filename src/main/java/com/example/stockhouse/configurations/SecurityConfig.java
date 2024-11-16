@@ -55,7 +55,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/carrello/ordina").permitAll()
                         .requestMatchers(HttpMethod.GET,"/utente/getPagamento").authenticated()
                         .requestMatchers(HttpMethod.GET,"/utente/getIndirizzo").authenticated()
-
+                        .requestMatchers(HttpMethod.POST,"/utente/addUtente").authenticated()
                         .requestMatchers(HttpMethod.POST,"/utente/addIndirizzo").authenticated()
                         .requestMatchers(HttpMethod.POST,"/utente/addPagamento").authenticated()
                         .requestMatchers(HttpMethod.POST,"/prodotto/crea").hasRole("admin")

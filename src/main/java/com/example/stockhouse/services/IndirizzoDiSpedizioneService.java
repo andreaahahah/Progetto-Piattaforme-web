@@ -20,7 +20,7 @@ public class IndirizzoDiSpedizioneService {
     public List<Indirizzo_di_spedizione> findIndirizzi(Utente utente){
         return indirizzoDiSpedizioneRepository.findByIdUtente(utente);
     }
-    public void createIndirizzoDiSpedizione(Utente utente, String via, String città, String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
+    public Indirizzo_di_spedizione createIndirizzoDiSpedizione(Utente utente, String via, String città, String cap, String nazione) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
             Indirizzo_di_spedizione indirizzodispedizione = new Indirizzo_di_spedizione();
             indirizzodispedizione.setIdUtente(utente);
@@ -29,13 +29,14 @@ public class IndirizzoDiSpedizioneService {
             indirizzodispedizione.setCap(cap);
             indirizzodispedizione.setNazione(nazione);
             indirizzoDiSpedizioneRepository.save(indirizzodispedizione);
+            return indirizzodispedizione;
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();
         }
     }
 
-    public void createIndirizzoDiSpedizione(Utente utente, String via, String città, String cap, String nazione, String note) throws IndirizzoDiSpedizioneAlreadyExist {
+    public Indirizzo_di_spedizione createIndirizzoDiSpedizione(Utente utente, String via, String città, String cap, String nazione, String note) throws IndirizzoDiSpedizioneAlreadyExist {
         if(indirizzoDiSpedizioneRepository.findByIdUtenteAndVia(utente, via) == null){
             Indirizzo_di_spedizione indirizzo_di_spedizione = new Indirizzo_di_spedizione();
             indirizzo_di_spedizione.setIdUtente(utente);
@@ -45,6 +46,7 @@ public class IndirizzoDiSpedizioneService {
             indirizzo_di_spedizione.setNazione(nazione);
             indirizzo_di_spedizione.setNote(note);
             indirizzoDiSpedizioneRepository.save(indirizzo_di_spedizione);
+            return indirizzo_di_spedizione;
         }
         else{
             throw new IndirizzoDiSpedizioneAlreadyExist();

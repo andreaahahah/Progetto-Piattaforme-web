@@ -55,6 +55,7 @@ public class DettaglioCarrelloService {
     }
 
     public  Dettaglio_carrello createDettaglioCarrello1(Carrello carrello, int prodotto, int quantita){
+        //verifica se esiste già quel prodotto in quel carrello
         Dettaglio_carrello dettagliocarrello = null;
         dettagliocarrello = new Dettaglio_carrello();
         dettagliocarrello.setIdCarrello(carrello);
