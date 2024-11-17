@@ -134,7 +134,7 @@ public class ProdottoController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("qualcosa è andato storto");
             }
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("qualcosa è andato storto.");
 
         }
     }

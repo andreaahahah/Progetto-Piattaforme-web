@@ -58,18 +58,17 @@ public class CarrelloController {
         Utente u = utenteService.findUtente(email);
 
         Optional<Prodotto> p = prodottoService.getProd(prodotto);
+        //questi controlli sono effettuati nel frontend, quindi posso restituire badRequest
         if(p.isEmpty()){
-
             return ResponseEntity.badRequest().build();
         }
         if(p.get().getQuantita()<quantita){
-
-            return ResponseEntity.badRequest().build(); //TODO ritornare qualcosa di specifico
+            return ResponseEntity.ok("Ci dispiace ma la quantità richiesta non è disponibile");
         }
         try {
             dettaglioCarrelloService.createDettaglioCarrello(u.getCarrello(), p.get(), quantita, p.get().getPrezzo());
         }catch (Exception e){
-            System.out.println(e);
+
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
@@ -118,16 +117,13 @@ public class CarrelloController {
         for(Prodotto p: prodottoList ){
             dettaglio_carrelloList.add( dettaglioCarrelloService.createDettaglioCarrello1(u.getCarrello(),p.getId(),p.getQuantita()));
         }
-
         try {
-
             ordineService.createOrdine(u,dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u),datiDiPagamentoService.find(u,id_pagamento) );
-
 
         }catch (ProdottoNotAvaible e){
             dettaglioCarrelloService.eliminaDettagli(dettaglio_carrelloList);
 
-            return ResponseEntity.badRequest().body("mi dispiace ma un prodotto del tuo carrello non è più disponibile");
+            return ResponseEntity.badRequest().body("ci dispiace ma un prodotto del tuo carrello non è più disponibile");
         }
         return ResponseEntity.ok().build();
     }
