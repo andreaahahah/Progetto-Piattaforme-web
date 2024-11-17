@@ -73,8 +73,12 @@ public class ProdottoController {
     public  ResponseEntity<?>getProdByMarca(
             @RequestParam ("marca")@NotNull String marca
     ){
-        Marca m = marcaService.findMarca(marca);
-        return ResponseEntity.ok(prodottoService.showProdByMarca(m));
+        Optional<Marca> m = marcaService.findMarca(marca);
+        if(m.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La marca non esiste " + marca);
+
+        }
+        return ResponseEntity.ok(prodottoService.showProdByMarca(m.get()));
     }
 
 
@@ -90,16 +94,8 @@ public class ProdottoController {
             @RequestParam("files") MultipartFile[] files
     ) throws ProdottoNotExist {
 
-        System.out.println("Prezzo: " + prezzo);
-        System.out.println("Quantita: " + quantita);
-        System.out.println("Brand: " + brand);
-        System.out.println("Nome: " + nome);
-        System.out.println("Descrizione: " + descrizione);
-        System.out.println("Categoria: " + categoria);
-        System.out.println("Vetrina: " + vetrina);
-        System.out.println("Numero di file ricevuti: " + files.length);
         try {
-            if (prezzo > 0 && quantita > 0 && !brand.isEmpty() && !nome.isEmpty() && !descrizione.isEmpty() &&  marcaService.existMarca(brand) && !categoria.isEmpty()) {
+            if (prezzo > 0 && quantita > 0 && !brand.isEmpty() && !nome.isEmpty() && !descrizione.isEmpty() &&   !categoria.isEmpty()) {
 
                 List<String> encodedImages = new ArrayList<>();
                 for (MultipartFile file : files) {
@@ -110,9 +106,12 @@ public class ProdottoController {
                 String concatenatedImages = String.join(",", encodedImages);
 
 
-                Marca m = marcaService.findMarca(brand);
+                Optional<Marca> m = marcaService.findMarca(brand);
+                if(m.isEmpty()){
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La marca non esiste: " + brand);
+                }
 
-                int prod = prodottoService.createProdotto(nome, prezzo, descrizione, quantita, m);
+                int prod = prodottoService.createProdotto(nome, prezzo, descrizione, quantita, m.get());
                 prodottoService.setImage(prod,concatenatedImages);
                 String[] categorieArray = categoria.split(" ");
 
@@ -132,7 +131,7 @@ public class ProdottoController {
                 }
                 return ResponseEntity.ok().build();
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("qualcosa è andato storto");
             }
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

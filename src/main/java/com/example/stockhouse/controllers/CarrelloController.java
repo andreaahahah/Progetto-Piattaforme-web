@@ -2,6 +2,7 @@ package com.example.stockhouse.controllers;
 
 import com.example.stockhouse.dtos.ProdottosDTO;
 import com.example.stockhouse.entities.*;
+import com.example.stockhouse.exceptions.ProdottoNotAvaible;
 import com.example.stockhouse.mappers.ProdottosMapper;
 import com.example.stockhouse.services.*;
 import jakarta.validation.constraints.NotNull;
@@ -99,17 +100,17 @@ public class CarrelloController {
         Utente u = utenteService.findUtente(email);
 
         if (!indirizzoDiSpedizioneService.utenteHaIndirizzo(u,id_indirizzo)){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Questo indirizzo non è tuo");
         }
         if(!datiDiPagamentoService.utenteHaPagamento(u,id_pagamento)){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Questo metodo di pagamento non è tuo");
         }
-        System.out.println("i prodotti sono" + prodottosDTO);
+
         List<Prodotto> prodottoList = ProdottosMapper.aProdotto(prodottosDTO);
         for(Prodotto p: prodottoList ){
-            System.out.println("un prodotto non esiste "+!prodottoService.esiste(p.getId()));
+
             if(!prodottoService.esiste(p.getId())){
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().body("che prodotti mi hai inviato?");
             }
         }
         List<Dettaglio_carrello> dettaglio_carrelloList = new LinkedList<>();
@@ -119,14 +120,14 @@ public class CarrelloController {
         }
 
         try {
-            System.out.println("entro nel try");
+
             ordineService.createOrdine(u,dettaglio_carrelloList, indirizzoDiSpedizioneService.find(id_indirizzo,u),datiDiPagamentoService.find(u,id_pagamento) );
 
 
-        }catch (Exception e){
-            System.out.println();
-            System.out.println(e);
-            return ResponseEntity.badRequest().build();
+        }catch (ProdottoNotAvaible e){
+            dettaglioCarrelloService.eliminaDettagli(dettaglio_carrelloList);
+
+            return ResponseEntity.badRequest().body("mi dispiace ma un prodotto del tuo carrello non è più disponibile");
         }
         return ResponseEntity.ok().build();
     }

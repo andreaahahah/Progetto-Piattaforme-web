@@ -61,6 +61,7 @@ public class OrdineService {
                 totale+=p.getPrezzo()*prodotti.get(p.getId());
                 p.setQuantita(p.getQuantita()- prodotti.get(p.getId()));}
             else{
+                dettaglioCarrelloService.trovaedElimina(p, utente.getCarrello());
                 throw new ProdottoNotAvaible();//TODO da gestite nel controller
             }
         }

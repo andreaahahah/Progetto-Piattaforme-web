@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MarcaService {
@@ -37,7 +38,7 @@ public class MarcaService {
 
     }
 
-    public Marca findMarca(String nome){
+    public Optional<Marca> findMarca(String nome){
         return  marcaRepository.findMarcaByNome(nome);
     }
 

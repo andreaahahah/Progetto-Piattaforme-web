@@ -76,7 +76,7 @@ public class UtenteController {
         try {
             d = datiDiPagamentoService.createDatoDiPagamento(u, numero, Date.valueOf(data), tipo, nome);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("questo metodo di pagamento già esiste");
         }
         return ResponseEntity.ok(d);
     }
@@ -168,7 +168,7 @@ public class UtenteController {
             }
 
         }catch(Exception e){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("L'indirizzo già esiste");
         }
         return ResponseEntity.ok().build();
     }
