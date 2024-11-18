@@ -62,7 +62,7 @@ public class OrdineService {
                 p.setQuantita(p.getQuantita()- prodotti.get(p.getId()));}
             else{
                 dettaglioCarrelloService.trovaedElimina(p, utente.getCarrello());
-                throw new ProdottoNotAvaible();//TODO da gestite nel controller
+                throw new ProdottoNotAvaible();
             }
         }
         //salvo i prodotti perchè ho modificato la loro quantià
